@@ -1,4 +1,5 @@
 .canvas {
+  display: block;
   border: 1px solid black;
   margin: 2rem;
   box-shadow:
