@@ -19,8 +19,8 @@ export default function Canvas(props) {
 
   useEffect(() => {
     const canvasCtx = canvas.current.getContext("2d");
-    canvas.current.width = "800"; //window.innerWidth
-    canvas.current.height = "600"; // window.innerHeight
+    canvas.current.width = "640"; //window.innerWidth
+    canvas.current.height = "480"; // window.innerHeight
     canvasCtx.strokeStyle = "#222";
     canvasCtx.fillStyle = "#222";
     canvasCtx.lineJoin = "round";
