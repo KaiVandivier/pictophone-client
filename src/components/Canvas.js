@@ -1,9 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
-import styles from "../styles/canvas.module.css";
+import utilStyles from "../styles/utils.module.css";
 
 // TODO:
-// Core: Add eraser
-// Core: Add button to reset canvas
 // Feat: Change pen size
 // Feat: Smooth lines?
 
@@ -88,7 +86,7 @@ export default function Canvas(props) {
 
       <canvas
         ref={canvas}
-        className={styles.canvas}
+        className={utilStyles.drawing}
         onMouseDown={(e) => {
           setIsDrawing(true);
           setLastX(e.pageX - canvasOffsetX);
