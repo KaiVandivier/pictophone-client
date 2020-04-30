@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 
+// TODO: disable submit until an option is checked
+
 export default function ChooseWord(props) {
   const [checked, setChecked] = useState(null);
   const [customInput, setCustomInput] = useState("");
