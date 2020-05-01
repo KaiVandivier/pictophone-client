@@ -1,11 +1,13 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useContext } from "react";
+import PropTypes from "prop-types";
+import { SocketContext } from "../App";
 import utilStyles from "../styles/utils.module.css";
 
 // TODO:
 // Feat: Change pen size
 // Feat: Smooth lines?
 
-export default function Canvas(props) {
+export default function Drawing(props) {
   const [isDrawing, setIsDrawing] = useState(false);
   const [lastX, setLastX] = useState(0);
   const [lastY, setLastY] = useState(0);
@@ -14,6 +16,7 @@ export default function Canvas(props) {
   const [canvasOffsetY, setCanvasOffsetY] = useState(0);
   const [ctx, setCtx] = useState(null);
   const canvas = useRef(null);
+  const socket = useContext(SocketContext);
 
   useEffect(() => {
     const canvasCtx = canvas.current.getContext("2d");
@@ -27,6 +30,11 @@ export default function Canvas(props) {
     setCtx(canvasCtx);
     setCanvasOffsetX(canvas.current.offsetLeft);
     setCanvasOffsetY(canvas.current.offsetTop);
+
+    socket.emit("drawing-phase-loaded");
+    socket.once("drawing-time-up", () => {
+      socket.emit("image-data", { dataURL: canvas.current.toDataURL() });
+    });
   }, []);
 
   function draw(e) {
@@ -52,13 +60,7 @@ export default function Canvas(props) {
     ctx.fill();
     ctx.restore();
   }
-  
-  function saveCanvasImageData() {
-    // TODO: send the data somewhere
-    const data = canvas.current.toDataURL();
-    console.log(data);
-  }
-  
+
   function clearCanvas() {
     ctx.clearRect(0, 0, canvas.current.width, canvas.current.height);
   }
@@ -67,7 +69,7 @@ export default function Canvas(props) {
     setRadius(3);
     ctx.lineWidth = 6;
     ctx.strokeStyle = "#222";
-    ctx.fillStyle = "222";
+    ctx.fillStyle = "#222";
   }
 
   function switchToEraser() {
@@ -78,11 +80,13 @@ export default function Canvas(props) {
   }
 
   return (
-    <div>
-      <button onClick={saveCanvasImageData}>Save Canvas URL</button>
-      <button onClick={clearCanvas}>Clear Whole Canvas</button>
-      <button onClick={switchToPen}>Pen</button>
-      <button onClick={switchToEraser}>Eraser</button>
+    <div className={utilStyles.center}>
+      <h1>Draw: "{props.word}"</h1>
+      <div>
+        <button onClick={switchToPen}>Pen</button>
+        <button onClick={switchToEraser}>Eraser</button>
+        <button onClick={clearCanvas}>Clear All</button>
+      </div>
 
       <canvas
         ref={canvas}
@@ -103,4 +107,8 @@ export default function Canvas(props) {
       />
     </div>
   );
+}
+
+Drawing.propTypes = {
+  word: PropTypes.string.isRequired
 }
