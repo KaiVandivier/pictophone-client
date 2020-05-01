@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import socketIOClient from "socket.io-client";
 import { endpoint, prodEndpoint } from "./config";
 import Waiting from "./components/Waiting";
@@ -12,17 +12,9 @@ const socket = socketIOClient(ENDPOINT);
 export const SocketContext = React.createContext(socket);
 
 function App() {
-  const [secs, setSecs] = useState(0);
   const [phaseComponent, setPhaseComponent] = useState(
     <Waiting onClick={sendReady} />
   );
-
-  useEffect(() => {
-    socket.on("time", (data) => {
-      setSecs(data.time);
-    });
-  }, []);
-  // The empty array argument prevents this from unduly running multiple times
 
   function sendReady() {
     socket.once("choose-word", loadWordChoosing);
@@ -64,8 +56,6 @@ function App() {
 
   return (
     <SocketContext.Provider value={socket}>
-      <p>Time: {secs}</p>
-
       {phaseComponent}
     </SocketContext.Provider>
   );
