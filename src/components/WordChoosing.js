@@ -1,5 +1,6 @@
-import React, { useState, /* useContext */ } from "react";
+import React, { useState /* useContext */ } from "react";
 import PropTypes from "prop-types";
+import utilStyles from "../styles/utils.module.css";
 // import { SocketContext } from "../App";
 
 export default function WordChoosing({ words, submitFn }) {
@@ -20,49 +21,54 @@ export default function WordChoosing({ words, submitFn }) {
   }
 
   return (
-    <form onSubmit={handleSubmit}>
-      {words.map((word) => (
-        <div key={word}>
-          <label htmlFor={word}>
+    <div className={utilStyles.center}>
+      <h1>Choose a Word:</h1>
+      <form onSubmit={handleSubmit}>
+        {words.map((word) => (
+          <div key={word}>
+            <label htmlFor={word}>
+              <input
+                id={word}
+                type="radio"
+                name="word"
+                value={word}
+                onChange={handleChange}
+                checked={checked === word}
+              />
+              {word}
+            </label>
+          </div>
+        ))}
+        <div>
+          <label htmlFor="custom">
             <input
-              id={word}
+              id="custom"
               type="radio"
               name="word"
-              value={word}
+              value="custom"
               onChange={handleChange}
-              checked={checked === word}
+              checked={checked === "custom"}
             />
-            {word}
+            <input
+              type="text"
+              name="custom"
+              placeholder="or write your own here!"
+              value={customInput}
+              onChange={(e) => setCustomInput(e.target.value)}
+              onClick={() => setChecked("custom")}
+            />
           </label>
         </div>
-      ))}
-      <div>
-        <label htmlFor="custom">
-          <input
-            id="custom"
-            type="radio"
-            name="word"
-            value="custom"
-            onChange={handleChange}
-            checked={checked === "custom"}
-          />
-          <input
-            type="text"
-            name="custom"
-            placeholder="or write your own here!"
-            value={customInput}
-            onChange={(e) => setCustomInput(e.target.value)}
-            onClick={() => setChecked("custom")}
-          />
-        </label>
-      </div>
 
-      <button type="submit" disabled={!checked}>Submit</button>
-    </form>
+        <button type="submit" disabled={!checked}>
+          Submit
+        </button>
+      </form>
+    </div>
   );
 }
 
 WordChoosing.propTypes = {
   words: PropTypes.arrayOf(PropTypes.string).isRequired,
-  submitFn: PropTypes.func.isRequired
-}
+  submitFn: PropTypes.func.isRequired,
+};
