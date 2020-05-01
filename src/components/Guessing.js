@@ -1,6 +1,7 @@
 import React, { useEffect, useContext, useRef } from "react";
 import PropTypes from "prop-types";
 import { SocketContext } from "../App";
+import Timer from "./Timer";
 import utilStyles from "../styles/utils.module.css";
 
 export default function Guessing(props) {
@@ -42,6 +43,7 @@ export default function Guessing(props) {
             placeholder="What's in the image?"
           />
         </label>
+        <Timer />
       </div>
       <img
         src={props.dataURL}

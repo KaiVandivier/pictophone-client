@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef, useContext } from "react";
 import PropTypes from "prop-types";
 import { SocketContext } from "../App";
 import utilStyles from "../styles/utils.module.css";
+import Timer from "./Timer";
 
 // TODO:
 // Feat: Change pen size
@@ -86,6 +87,7 @@ export default function Drawing(props) {
         <button onClick={switchToPen}>Pen</button>
         <button onClick={switchToEraser}>Eraser</button>
         <button onClick={clearCanvas}>Clear All</button>
+        <Timer />
       </div>
 
       <canvas
