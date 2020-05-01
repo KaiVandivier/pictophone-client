@@ -1,27 +1,27 @@
-import React, { useState } from "react";
+import React, { useState, /* useContext */ } from "react";
+import PropTypes from "prop-types";
+// import { SocketContext } from "../App";
 
-// TODO: disable submit until an option is checked
-
-export default function ChooseWord(props) {
+export default function WordChoosing({ words, submitFn }) {
   const [checked, setChecked] = useState(null);
   const [customInput, setCustomInput] = useState("");
+  // const socket = useContext(SocketContext);
 
   function handleSubmit(e) {
     e.preventDefault();
+    if (!checked) return alert("Please choose a word!");
     const submitVal = checked === "custom" ? customInput : checked;
-    // TODO: submit value to server
-    // props.submitFn(submitVal);  ?
-    console.log("submitting", submitVal);
+    // submit value to server
+    submitFn(submitVal);
   }
 
   function handleChange(e) {
-    console.log(e.target);
     setChecked(e.target.value);
   }
 
   return (
     <form onSubmit={handleSubmit}>
-      {props.words.map((word) => (
+      {words.map((word) => (
         <div key={word}>
           <label htmlFor={word}>
             <input
@@ -57,7 +57,12 @@ export default function ChooseWord(props) {
         </label>
       </div>
 
-      <button type="submit">Submit</button>
+      <button type="submit" disabled={!checked}>Submit</button>
     </form>
   );
+}
+
+WordChoosing.propTypes = {
+  words: PropTypes.arrayOf(PropTypes.string).isRequired,
+  submitFn: PropTypes.func.isRequired
 }
