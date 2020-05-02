@@ -6,7 +6,7 @@ import utilStyles from "../styles/utils.module.css";
 const Waiting = (props) => {
   return (
     <div className={utilStyles.center}>
-      <button onClick={props.onClick}>Ready</button>
+      <button onClick={props.onClick} className={utilStyles.button}>Ready!</button>
     </div>
   );
 };
