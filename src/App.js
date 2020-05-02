@@ -5,6 +5,8 @@ import Waiting from "./components/Waiting";
 import Drawing from "./components/Drawing";
 import WordChoosing from "./components/WordChoosing";
 import Guessing from "./components/Guessing";
+import Replay from "./components/Replay";
+// import {testReplayData} from "./lib/testUtils";
 
 const ENDPOINT =
   process.env.NODE_ENV === "production" ? prodEndpoint : endpoint;
@@ -32,26 +34,20 @@ function App() {
   }
 
   function loadDrawingPhase({ word }) {
-    // Note that there is already a time handler from `useEffect`
-    // socket.on("time"); // TODO: Handle time; maybe pass to Drawing
+    socket.off("load-replay"); // TODO: Is there a better solution to control flow after guessing phase?
     socket.once("load-guessing-phase", loadGuessingPhase);
-
     setPhaseComponent(<Drawing word={word} />);
   }
 
   function loadGuessingPhase({ dataURL }) {
-    // TODO: Handle socket.on("time")
-    if (true) {
-      // TODO: Listen for "replay" too
-      socket.once("load-drawing-phase", loadDrawingPhase);
-    } else {
-      socket.once("load-replay", loadReplay);
-    }
+    socket.once("load-drawing-phase", loadDrawingPhase);
+    socket.once("load-replay", loadReplay);
     setPhaseComponent(<Guessing dataURL={dataURL} />);
   }
 
-  function loadReplay() {
-    setPhaseComponent(<h1>Hooray! Game cycle done!</h1>);
+  function loadReplay({ replayData }) {
+    socket.off("load-drawing-phase"); // TODO: A better solution?
+    setPhaseComponent(<Replay replayData={replayData} />);
   }
 
   return (
