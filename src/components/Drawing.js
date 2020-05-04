@@ -5,6 +5,7 @@ import utilStyles from "../styles/utils.module.css";
 import Timer from "./Timer";
 
 // TODO:
+// CORE: Vulnerable to window size change
 // Feat: Change pen size
 // Feat: Smooth lines?
 
