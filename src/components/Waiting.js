@@ -2,6 +2,7 @@ import React, { /* useEffect, */ useContext, /* useState */ } from "react";
 import PropTypes from "prop-types";
 import utilStyles from "../styles/utils.module.css";
 import { SocketContext, RoomContext } from "../App";
+import msgs from "../lib/messages";
 
 // TODO: This and the "sendReady()" function in App could be combined better
 //   Add TOGGLE ready and `startGame` for room creator
@@ -11,6 +12,8 @@ import { SocketContext, RoomContext } from "../App";
 export default function Waiting({ onClick }) {
   const socket = useContext(SocketContext);
   const room = useContext(RoomContext);
+
+  const allReady = room.players.every(({ ready }) => ready);
 
   return (
     <div className={utilStyles.center}>
@@ -27,13 +30,17 @@ export default function Waiting({ onClick }) {
           </li>
         ))}
       </ul>
-      <button onClick={onClick} className={utilStyles.button}>
+      <button onClick={() => socket.emit(msgs.TOGGLE_READY)} className={utilStyles.button}>
         Ready!
       </button>
+      {/* TODO: If not room owner, show "Waiting for room creator to start..." */}
+      {allReady && room.creatorId === socket.id ? (
+        <button onClick={() => socket.emit(msgs.START_GAME)} className={utilStyles.button}>Start Game!</button>
+      ) : (
+        <p>Waiting for everyone to be ready...</p>
+      )}
     </div>
   );
 }
 
-Waiting.propTypes = {
-  onClick: PropTypes.func.isRequired,
-};
+Waiting.propTypes = {};
