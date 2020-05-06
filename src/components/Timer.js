@@ -7,12 +7,12 @@ export default function Timer() {
 
   useEffect(() => {
     console.log("Adding time listener");
-    socket.on("time", ({ time }) => setTime(time))
+    socket.on("time", setTime)
     return () => {
       console.log("Removing time listener");
       socket.off("time");
     }
-  }, [])
+  }, [socket])
 
   return (
     <span>Time left: {time}</span>
