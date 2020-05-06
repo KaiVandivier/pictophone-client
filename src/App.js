@@ -18,6 +18,7 @@ function App() {
   useEffect(() => {
     socket.on("message", console.log);
     socket.on("room-update", setRoom);
+
     return () => {
       socket.off("room-update");
       socket.off("message");
@@ -52,8 +53,6 @@ function App() {
       <RoomContext.Provider value={room}>
         {!room ? (
           <div className={utilStyles.center}>
-            <button onClick={getRooms}>Get Rooms</button>
-            <button onClick={createRoom}>Create Room</button>
             <label htmlFor="join-room">Join Room: </label>
             <input
               type="text"
@@ -65,6 +64,8 @@ function App() {
               }}
             />
             <button onClick={() => joinRoom(roomInput)}>Join</button>
+            <button onClick={createRoom}>Create Room</button>
+            <button onClick={getRooms}>Get Rooms</button>
             {rooms.map((roomId) => (
               <p key={roomId}>
                 Room {roomId}
