@@ -6,9 +6,6 @@ import Guessing from "./Guessing";
 import Replay from "./Replay";
 import { SocketContext } from "../App";
 
-// TODO: Do we need to receive more about the room than the id?
-// TODO: Also, propTypes
-
 // TODO: Move this to a `constants` file
 // const phases = Object.freeze({
 //   WAITING: "waiting",
@@ -18,7 +15,7 @@ import { SocketContext } from "../App";
 //   REPLAY: "replay",
 // });
 
-export default function GameRoom({ room }) {
+export default function GameRoom(props) {
   const socket = useContext(SocketContext);
   const [phaseComponent, setPhaseComponent] = useState(
     <Waiting onClick={sendReady} />
@@ -51,9 +48,9 @@ export default function GameRoom({ room }) {
     setPhaseComponent(<Guessing dataURL={dataURL} />);
   }
 
-  function loadReplay(replayData) {
+  function loadReplay() {
     socket.off("load-drawing-phase"); // TODO: A better solution?
-    setPhaseComponent(<Replay replayData={replayData} />);
+    setPhaseComponent(<Replay />);
   }
 
   // const phaseComponents = {
