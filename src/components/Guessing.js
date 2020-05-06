@@ -25,7 +25,7 @@ export default function Guessing(props) {
   useEffect(() => {
     socket.emit("guessing-phase-loaded");
     socket.once("guessing-time-up", () =>
-      socket.emit("guess-data", { guess: input.current.value })
+      socket.emit("guess-data", input.current.value)
     );
   }, []);
 
