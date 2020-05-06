@@ -1,5 +1,5 @@
 import React, { /* useEffect, */ useContext, /* useState */ } from "react";
-import PropTypes from "prop-types";
+// import PropTypes from "prop-types";
 import utilStyles from "../styles/utils.module.css";
 import { SocketContext, RoomContext } from "../App";
 import msgs from "../lib/messages";
@@ -18,9 +18,10 @@ export default function Waiting({ onClick }) {
   return (
     <div className={utilStyles.center}>
       <p>Room id: {room.id}</p>
-      <small>Send the room id to other players so they can join</small>
+      <small>(Send the room id to other players so they can join!)</small>
       <p>Players: </p>
       <ul>
+        {/* TODO: Mark host; allow name change */}
         {room.players.map(({ name, id, ready }) => (
           <li key={id}>
             <p>
@@ -33,7 +34,7 @@ export default function Waiting({ onClick }) {
       <button onClick={() => socket.emit(msgs.TOGGLE_READY)} className={utilStyles.button}>
         Ready!
       </button>
-      {/* TODO: If not room owner, show "Waiting for room creator to start..." */}
+      {/* TODO: If not room owner, show "Everyone is ready! Waiting for host to start..." */}
       {allReady && room.creatorId === socket.id ? (
         <button onClick={() => socket.emit(msgs.START_GAME)} className={utilStyles.button}>Start Game!</button>
       ) : (

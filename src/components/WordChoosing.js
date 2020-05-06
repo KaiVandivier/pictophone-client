@@ -1,24 +1,28 @@
-import React, { useState /* useContext */ } from "react";
+import React, { useState, useContext } from "react";
 import PropTypes from "prop-types";
 import utilStyles from "../styles/utils.module.css";
-// import { SocketContext } from "../App";
+import { SocketContext, RoomContext } from "../App";
+import msgs from "../lib/messages";
 
-export default function WordChoosing({ words, submitFn }) {
+export default function WordChoosing({ words }) {
   const [checked, setChecked] = useState(null);
   const [customInput, setCustomInput] = useState("");
-  // const socket = useContext(SocketContext);
+  const socket = useContext(SocketContext);
+  const room = useContext(RoomContext);
 
   function handleSubmit(e) {
     e.preventDefault();
     if (!checked) return alert("Please choose a word!");
     const submitVal = checked === "custom" ? customInput : checked;
     // submit value to server
-    submitFn(submitVal);
+    socket.emit("word-chosen", submitVal);
   }
 
   function handleChange(e) {
     setChecked(e.target.value);
   }
+
+  const allReady = room.players.every(({ ready }) => ready);
 
   return (
     <div className={utilStyles.center}>
@@ -63,6 +67,13 @@ export default function WordChoosing({ words, submitFn }) {
         <button type="submit" disabled={!checked}>
           Submit
         </button>
+        {allReady && socket.id === room.creatorId ? (
+          <button className={utilStyles.button} onClick={() => socket.emit(msgs.CONTINUE)}>
+            Continue to Drawing
+          </button>
+        ) : (
+          <p>Waiting for everyone to choose a word...</p>
+        )}
       </form>
     </div>
   );
@@ -70,5 +81,4 @@ export default function WordChoosing({ words, submitFn }) {
 
 WordChoosing.propTypes = {
   words: PropTypes.arrayOf(PropTypes.string).isRequired,
-  submitFn: PropTypes.func.isRequired,
 };

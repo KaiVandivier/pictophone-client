@@ -35,8 +35,9 @@ export default function Drawing(props) {
 
     socket.emit("drawing-phase-loaded");
     socket.once("drawing-time-up", () => {
-      socket.emit("image-data", { dataURL: canvas.current.toDataURL() });
+      socket.emit("image-data", canvas.current.toDataURL());
     });
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   function draw(e) {
