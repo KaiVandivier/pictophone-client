@@ -7,6 +7,7 @@ import msgs from "../lib/messages";
 export default function WordChoosing({ words }) {
   const [checked, setChecked] = useState(null);
   const [customInput, setCustomInput] = useState("");
+  const [submitted, setSubmitted] = useState(false);
   const socket = useContext(SocketContext);
   const room = useContext(RoomContext);
 
@@ -16,6 +17,7 @@ export default function WordChoosing({ words }) {
     const submitVal = checked === "custom" ? customInput : checked;
     // submit value to server
     socket.emit("word-chosen", submitVal);
+    setSubmitted(true)
   }
 
   function handleChange(e) {
@@ -28,49 +30,61 @@ export default function WordChoosing({ words }) {
     <div className={utilStyles.center}>
       <h1>Choose a Word:</h1>
       <form onSubmit={handleSubmit}>
-        {words.map((word) => (
-          <div key={word}>
-            <label htmlFor={word}>
+        <fieldset disabled={submitted}>
+          {words.map((word) => (
+            <div key={word}>
+              <label htmlFor={word}>
+                <input
+                  id={word}
+                  type="radio"
+                  name="word"
+                  value={word}
+                  onChange={handleChange}
+                  checked={checked === word}
+                />
+                {word}
+              </label>
+            </div>
+          ))}
+          <div>
+            <label htmlFor="custom">
               <input
-                id={word}
+                id="custom"
                 type="radio"
                 name="word"
-                value={word}
+                value="custom"
                 onChange={handleChange}
-                checked={checked === word}
+                checked={checked === "custom"}
               />
-              {word}
+              <input
+                type="text"
+                name="custom"
+                placeholder="or write your own here!"
+                value={customInput}
+                onChange={(e) => setCustomInput(e.target.value)}
+                onClick={() => setChecked("custom")}
+              />
             </label>
           </div>
-        ))}
-        <div>
-          <label htmlFor="custom">
-            <input
-              id="custom"
-              type="radio"
-              name="word"
-              value="custom"
-              onChange={handleChange}
-              checked={checked === "custom"}
-            />
-            <input
-              type="text"
-              name="custom"
-              placeholder="or write your own here!"
-              value={customInput}
-              onChange={(e) => setCustomInput(e.target.value)}
-              onClick={() => setChecked("custom")}
-            />
-          </label>
-        </div>
 
-        <button type="submit" disabled={!checked}>
-          Submit
-        </button>
-        {allReady && socket.id === room.creatorId ? (
-          <button className={utilStyles.button} onClick={() => socket.emit(msgs.CONTINUE)}>
-            Continue to Drawing
+          <button type="submit" disabled={!checked}>
+            Submit
           </button>
+        </fieldset>
+        {allReady ? (
+          <div>
+            <p>Everyone is ready!</p>
+            {socket.id === room.creatorId ? (
+              <button
+                className={utilStyles.button}
+                onClick={() => socket.emit(msgs.CONTINUE)}
+              >
+                Start Drawing!
+              </button>
+            ) : (
+              <p>Waiting for host to start...</p>
+            )}
+          </div>
         ) : (
           <p>Waiting for everyone to choose a word...</p>
         )}
