@@ -1,5 +1,6 @@
 import React, { useState, useContext, useEffect } from "react";
 import Waiting from "./Waiting";
+import Countdown from "./Countdown";
 import Drawing from "./Drawing";
 import WordChoosing from "./WordChoosing";
 import Guessing from "./Guessing";
@@ -23,6 +24,7 @@ export default function GameRoom(props) {
 
   useEffect(() => {
     socket.once("choose-word", loadWordChoosing);
+    socket.on("countdown", loadCountdown);
   });
 
   // TODO: Change this logic to handle "toggleReady" and "gameStart"
@@ -34,6 +36,10 @@ export default function GameRoom(props) {
   function loadWordChoosing(words) {
     socket.once("load-drawing-phase", loadDrawingPhase);
     setPhaseComponent(<WordChoosing words={words} />);
+  }
+
+  function loadCountdown(message) {
+    setPhaseComponent(<Countdown message={message} />);
   }
 
   function loadDrawingPhase(word) {
