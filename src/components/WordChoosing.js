@@ -25,6 +25,28 @@ export default function WordChoosing({ words }) {
     setChecked(e.target.value);
   }
 
+  function mapWords(word) {
+    return (
+      <label
+        key={word}
+        className={`${styles.wordChoice} ${
+          checked === word ? styles.checked : null
+        }`}
+        htmlFor={word}
+      >
+        <input
+          id={word}
+          type="radio"
+          name="word"
+          value={word}
+          onChange={handleChange}
+          checked={checked === word}
+        />
+        {word}
+      </label>
+    );
+  }
+
   const allReady = room?.players.every(({ ready }) => ready);
 
   return (
@@ -35,25 +57,14 @@ export default function WordChoosing({ words }) {
           className={`${utilStyles.fieldset} ${utilStyles.center}`}
           disabled={submitted}
         >
-          {words.map((word) => (
-            <label
-              key={word}
-              className={`${styles.wordChoice} ${
-                checked === word ? styles.checked : null
-              }`}
-              htmlFor={word}
-            >
-              <input
-                id={word}
-                type="radio"
-                name="word"
-                value={word}
-                onChange={handleChange}
-                checked={checked === word}
-              />
-              {word}
-            </label>
-          ))}
+          <div className={styles.columns}>
+            <div className={utilStyles.center}>
+              {words.slice(0, words.length / 2).map(mapWords)}
+            </div>
+            <div className={utilStyles.center}>
+              {words.slice(words.length / 2).map(mapWords)}
+            </div>
+          </div>
           <label
             className={`${styles.wordChoice} ${
               checked === "custom" ? styles.checked : null
@@ -87,14 +98,16 @@ export default function WordChoosing({ words }) {
           </button>
         </fieldset>
       </form>
+      {/* <hr className={utilStyles.hr} /> */}
       {allReady ? (
         <p>Everyone is ready! Waiting for host to start.</p>
       ) : (
         <p>Waiting for everyone to choose a word...</p>
       )}
+      {/* Add/remove `true` for testing */}
       {true || socket.id === room.creatorId ? (
         <button
-          className={utilStyles.button}
+          className={`${utilStyles.smallButton} ${utilStyles.greenButton}`}
           onClick={() => socket.emit(msgs.CONTINUE)}
           disabled={!allReady}
         >

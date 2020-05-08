@@ -44,8 +44,7 @@ export default function Waiting({ onClick }) {
           ) : (
             <p>Waiting for everyone to be ready...</p>
           )}
-          {/* Remove "true" after testing! */}
-          {true || socket.id === room.creatorId ? (
+          {socket.id === room.creatorId ? (
             <button
               className={`${utilStyles.smallButton} ${utilStyles.greenButton}`}
               onClick={() => socket.emit(msgs.START_GAME)}
@@ -61,8 +60,7 @@ export default function Waiting({ onClick }) {
             {room.players.map(({ name, id, ready }) => (
               <li key={id}>
                 <p className={ready ? styles.ready : null}>
-                  {name || id} {id === socket.id ? "(you)" : null}{" "}
-                  {id === room.creatorId ? "(host)" : null}
+                  {name || id} {id === room.creatorId ? "(host)" : null}
                   {" - "}
                   <small>{ready ? "Ready!" : "Not Ready"}</small>
                 </p>

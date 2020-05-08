@@ -9,7 +9,10 @@
 .gridContainer {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  min-height: 12rem;
+  grid-gap: 1rem;
+  padding: 1rem;
+  min-height: 10rem;
+  max-width: 450px;
 }
 
 .playerList h3 {

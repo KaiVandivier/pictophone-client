@@ -1,3 +1,10 @@
+.columns {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-gap: 1rem;
+  max-width: 450px;
+}
+
 .wordChoice {
   display: flex;
   align-items: center;
