@@ -1,6 +1,7 @@
 import React, { useState, useContext } from "react";
 import PropTypes from "prop-types";
 import utilStyles from "../styles/utils.module.css";
+import styles from "../styles/WordChoosing.module.css";
 import { SocketContext, RoomContext } from "../App";
 import msgs from "../lib/messages";
 
@@ -17,78 +18,91 @@ export default function WordChoosing({ words }) {
     const submitVal = checked === "custom" ? customInput : checked;
     // submit value to server
     socket.emit("word-chosen", submitVal);
-    setSubmitted(true)
+    setSubmitted(true);
   }
 
   function handleChange(e) {
     setChecked(e.target.value);
   }
 
-  const allReady = room.players.every(({ ready }) => ready);
+  const allReady = room?.players.every(({ ready }) => ready);
 
   return (
-    <div className={utilStyles.center}>
-      <h1>Choose a Word:</h1>
+    <div className={`${utilStyles.center} ${utilStyles.fullPage}`}>
+      <h1 className={utilStyles.headingLg}>Choose a Word:</h1>
       <form onSubmit={handleSubmit}>
-        <fieldset disabled={submitted}>
+        <fieldset
+          className={`${utilStyles.fieldset} ${utilStyles.center}`}
+          disabled={submitted}
+        >
           {words.map((word) => (
-            <div key={word}>
-              <label htmlFor={word}>
-                <input
-                  id={word}
-                  type="radio"
-                  name="word"
-                  value={word}
-                  onChange={handleChange}
-                  checked={checked === word}
-                />
-                {word}
-              </label>
-            </div>
-          ))}
-          <div>
-            <label htmlFor="custom">
+            <label
+              key={word}
+              className={`${styles.wordChoice} ${
+                checked === word ? styles.checked : null
+              }`}
+              htmlFor={word}
+            >
               <input
-                id="custom"
+                id={word}
                 type="radio"
                 name="word"
-                value="custom"
+                value={word}
                 onChange={handleChange}
-                checked={checked === "custom"}
+                checked={checked === word}
               />
-              <input
-                type="text"
-                name="custom"
-                placeholder="or write your own here!"
-                value={customInput}
-                onChange={(e) => setCustomInput(e.target.value)}
-                onClick={() => setChecked("custom")}
-              />
+              {word}
             </label>
-          </div>
+          ))}
+          <label
+            className={`${styles.wordChoice} ${
+              checked === "custom" ? styles.checked : null
+            }`}
+            htmlFor="custom"
+          >
+            <input
+              id="custom"
+              type="radio"
+              name="word"
+              value="custom"
+              onChange={handleChange}
+              checked={checked === "custom"}
+            />
+            <input
+              type="text"
+              name="custom"
+              placeholder="or write your own here!"
+              value={customInput}
+              onChange={(e) => setCustomInput(e.target.value)}
+              onClick={() => setChecked("custom")}
+            />
+          </label>
 
-          <button type="submit" disabled={!checked}>
-            Submit
+          <button
+            type="submit"
+            disabled={!checked}
+            className={utilStyles.smallButton}
+          >
+            Submit Choice
           </button>
         </fieldset>
-        {allReady ? (
-          <div>
-            <p>Everyone is ready!</p>
-            {socket.id === room.creatorId ? (
-              <button
-                className={utilStyles.button}
-                onClick={() => socket.emit(msgs.CONTINUE)}
-              >
-                Start Drawing!
-              </button>
-            ) : (
-              <p>Waiting for host to start...</p>
-            )}
-          </div>
-        ) : (
-          <p>Waiting for everyone to choose a word...</p>
-        )}
       </form>
+      {allReady ? (
+        <p>Everyone is ready! Waiting for host to start.</p>
+      ) : (
+        <p>Waiting for everyone to choose a word...</p>
+      )}
+      {true || socket.id === room.creatorId ? (
+        <button
+          className={utilStyles.button}
+          onClick={() => socket.emit(msgs.CONTINUE)}
+          disabled={!allReady}
+        >
+          Start Drawing!
+        </button>
+      ) : (
+        <p>Waiting for host to start...</p>
+      )}
     </div>
   );
 }

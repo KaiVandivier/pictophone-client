@@ -1,0 +1,42 @@
+.wordChoice {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: max-content;
+  border: 1px solid purple;
+  border-radius: 1rem;
+  min-height: 2.5rem;
+  padding: 0 2rem;
+  margin-bottom: 0.3rem;
+  font-family: "Eczar", serif;
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: white;
+  background-color: #aeb1d4;
+  border: 3px solid #5662df;
+  border-radius: 1rem;
+  cursor: pointer;
+  box-shadow:
+    0 1.1px 2.7px rgba(0, 0, 0, 0.043),
+    0 2.8px 6.9px rgba(0, 0, 0, 0.062)
+  ;
+}
+
+.wordChoice input[type="radio"] {
+  display: none;
+}
+
+.wordChoice input[type="text"] {
+  max-width: 10rem;
+  text-align: center;
+}
+
+.wordChoice:hover {
+  transform: scale(1.1);
+}
+
+.checked {
+  background-color: #ff9328;
+  border: .2rem solid #ff7b00;
+  transform: scale(1.1);
+}
