@@ -1,7 +1,7 @@
 .titleHome {
   font-size: 5rem;
   font-family: 'Reenie Beanie', cursive;
-  margin: 1rem 0;
+  margin: 1rem 0 0;
 }
 
 .heading {
@@ -13,9 +13,9 @@
 
 .headingLg {
   font-family: "Eczar", serif;
-  font-size: 2rem;
+  font-size: 2.5rem;
   margin: 1rem 0 0;
-  font-weight: normal;
+  font-weight: 400;
 }
 
 .drawing {
@@ -114,4 +114,11 @@
 
 .playerList p {
   margin: 0;
+}
+
+.hr {
+  border: none;
+  height: 3px;
+  width: 80%;
+  background-image: linear-gradient(to right, white, black, white);
 }

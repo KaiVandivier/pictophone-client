@@ -19,15 +19,24 @@ export default function Waiting({ onClick }) {
     <div className={`${utilStyles.center} ${utilStyles.fullPage}`}>
       <h1 className={utilStyles.titleHome}>Pict-o-phone!</h1>
 
-      <h2 className={utilStyles.heading}>Room id: <br/> {room.id}</h2>
-      <small>(Send the room id to other players so they can join!)</small>
+      <h2 className={utilStyles.headingLg}>{room.name}</h2>
+      
+      <hr className={utilStyles.hr} />
+
+      <h2 className={utilStyles.heading}>
+        Room id:{" "}
+        <code>{room.id}</code>
+      </h2>
+      <p>(Send the room id to other players so they can join!)</p>
+      <hr className={utilStyles.hr} />
       <h2 className={utilStyles.heading}>Players: </h2>
       <ul className={utilStyles.playerList}>
         {/* TODO: Mark host; allow name change */}
         {room.players.map(({ name, id, ready }) => (
           <li key={id}>
             <p>
-              {name || id} {id === socket.id ? "(you)" : null} {id === room.creatorId ? "(host)" : null}
+              {name || id} {id === socket.id ? "(you)" : null}{" "}
+              {id === room.creatorId ? "(host)" : null}
             </p>
             <small>{ready ? "Ready!" : "Not Ready"}</small>
           </li>
@@ -52,9 +61,7 @@ export default function Waiting({ onClick }) {
         >
           Start Game!
         </button>
-      ) : (
-        <p>Waiting for host to start...</p>
-      )}
+      ) : null}
     </div>
   );
 }
