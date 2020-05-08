@@ -1,6 +1,7 @@
 import React, { /* useEffect, */ useContext /* useState */ } from "react";
 // import PropTypes from "prop-types";
 import utilStyles from "../styles/utils.module.css";
+import styles from "../styles/Waiting.module.css";
 import { SocketContext, RoomContext } from "../App";
 import msgs from "../lib/messages";
 
@@ -17,51 +18,60 @@ export default function Waiting({ onClick }) {
 
   return (
     <div className={`${utilStyles.center} ${utilStyles.fullPage}`}>
-      <h1 className={utilStyles.titleHome}>Pict-o-phone!</h1>
+      <header className={styles.header}>
+        <h1 className={utilStyles.titleHome}>Pict-o-phone!</h1>
 
-      <h2 className={utilStyles.headingLg}>{room.name}</h2>
-      
+        <h2>{room.name || "Game Room"}</h2>
+
+        <p>
+          Room id: <code>{room.id}</code>
+        </p>
+        <p>(Send the room id to other players so they can join!)</p>
+      </header>
+
       <hr className={utilStyles.hr} />
 
-      <h2 className={utilStyles.heading}>
-        Room id:{" "}
-        <code>{room.id}</code>
-      </h2>
-      <p>(Send the room id to other players so they can join!)</p>
+      <div className={styles.gridContainer}>
+        <div className={utilStyles.center}>
+          <button
+            onClick={() => socket.emit(msgs.TOGGLE_READY)}
+            className={utilStyles.smallButton}
+          >
+            I'm Ready!
+          </button>
+          {allReady ? (
+            <p>Everyone is ready! Waiting for host to start.</p>
+          ) : (
+            <p>Waiting for everyone to be ready...</p>
+          )}
+          {/* Remove "true" after testing! */}
+          {true || socket.id === room.creatorId ? (
+            <button
+              className={`${utilStyles.smallButton} ${utilStyles.greenButton}`}
+              onClick={() => socket.emit(msgs.START_GAME)}
+              disabled={!allReady}
+            >
+              Start Game!
+            </button>
+          ) : null}
+        </div>
+        <div className={`${utilStyles.center} ${styles.playerList}`}>
+          <h3>Players:</h3>
+          <ul>
+            {room.players.map(({ name, id, ready }) => (
+              <li key={id}>
+                <p className={ready ? styles.ready : null}>
+                  {name || id} {id === socket.id ? "(you)" : null}{" "}
+                  {id === room.creatorId ? "(host)" : null}
+                  {" - "}
+                  <small>{ready ? "Ready!" : "Not Ready"}</small>
+                </p>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
       <hr className={utilStyles.hr} />
-      <h2 className={utilStyles.heading}>Players: </h2>
-      <ul className={utilStyles.playerList}>
-        {/* TODO: Mark host; allow name change */}
-        {room.players.map(({ name, id, ready }) => (
-          <li key={id}>
-            <p>
-              {name || id} {id === socket.id ? "(you)" : null}{" "}
-              {id === room.creatorId ? "(host)" : null}
-            </p>
-            <small>{ready ? "Ready!" : "Not Ready"}</small>
-          </li>
-        ))}
-      </ul>
-      <button
-        onClick={() => socket.emit(msgs.TOGGLE_READY)}
-        className={utilStyles.smallButton}
-      >
-        Ready!
-      </button>
-      {allReady ? (
-        <p>Everyone is ready! Waiting for host to start.</p>
-      ) : (
-        <p>Waiting for everyone to be ready...</p>
-      )}
-      {socket.id === room.creatorId ? (
-        <button
-          className={utilStyles.button}
-          onClick={() => socket.emit(msgs.START_GAME)}
-          disabled={!allReady}
-        >
-          Start Game!
-        </button>
-      ) : null}
     </div>
   );
 }

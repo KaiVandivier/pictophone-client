@@ -1,7 +1,7 @@
 .titleHome {
   font-size: 5rem;
   font-family: 'Reenie Beanie', cursive;
-  margin: 1rem 0 0;
+  margin: 0;
 }
 
 .heading {
@@ -54,7 +54,7 @@
 }
 
 .smallButton {
-  padding: 0.5rem 1rem;
+  padding: 0.2rem 0.8rem;
   margin: 0.5rem;
   font-family: "Eczar", serif;
   font-size: 1.2rem;
@@ -62,7 +62,7 @@
   color: white;
   background-color: #a16edb;
   border: .2rem solid #5c338a;
-  border-radius: 1rem;
+  border-radius: 0.5rem;
   cursor: pointer;
   box-shadow:
     0 1.1px 2.7px rgba(0, 0, 0, 0.043),
@@ -76,6 +76,11 @@
 
 .smallButton:active, .button:active {
   box-shadow: none;
+}
+
+.greenButton {
+  background-color: #77db6e;
+  border: .3rem solid #338a37;
 }
 
 *[disabled] {
@@ -105,20 +110,9 @@
   margin: 0.5rem;
 }
 
-.playerList {
-  margin: 1rem 0;
-  padding: 0;
-  list-style: none;
-  font-family: "Eczar", sans-serif;
-}
-
-.playerList p {
-  margin: 0;
-}
-
 .hr {
   border: none;
-  height: 3px;
+  height: 1px;
   width: 80%;
   background-image: linear-gradient(to right, white, black, white);
 }
