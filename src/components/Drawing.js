@@ -83,12 +83,12 @@ export default function Drawing(props) {
   }
 
   return (
-    <div className={utilStyles.center}>
-      <h1>Draw: "{props.word}"</h1>
+    <div className={`${utilStyles.center} ${utilStyles.fullPage}`}>
+      <h1 className={utilStyles.headingLg}>Draw: "{props.word}"</h1>
       <div>
-        <button onClick={switchToPen}>Pen</button>
-        <button onClick={switchToEraser}>Eraser</button>
-        <button onClick={clearCanvas}>Clear All</button>
+        <button className={utilStyles.smallButton} onClick={switchToPen}>Pen</button>
+        <button className={utilStyles.smallButton} onClick={switchToEraser}>Eraser</button>
+        <button className={utilStyles.smallButton} onClick={clearCanvas}>Clear All</button>
         <Timer />
       </div>
 
