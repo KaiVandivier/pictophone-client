@@ -21,7 +21,7 @@
 .drawing {
   display: block;
   border: 1px solid black;
-  margin: 2rem;
+  margin: 0 2rem;
   box-shadow:
     0 2.8px 2.2px rgba(0, 0, 0, 0.02),
     0 6.7px 5.3px rgba(0, 0, 0, 0.028),
@@ -71,7 +71,11 @@
     0 11.7px 29.2px rgba(0, 0, 0, 0.097),
     0 32px 80px rgba(0, 0, 0, 0.14)
   ;
-  transition: box-shadow 0.2s;
+  transition: box-shadow 0.15s;
+}
+
+.smallButton:active, .button:active {
+  box-shadow: none;
 }
 
 *[disabled] {
