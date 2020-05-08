@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef, useContext } from "react";
 import PropTypes from "prop-types";
 import { SocketContext } from "../App";
 import utilStyles from "../styles/utils.module.css";
+import styles from "../styles/Drawing.module.css";
 import Timer from "./Timer";
 
 // TODO:
@@ -37,7 +38,7 @@ export default function Drawing(props) {
     socket.once("drawing-time-up", () => {
       socket.emit("image-data", canvas.current.toDataURL());
     });
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   function draw(e) {
@@ -85,11 +86,21 @@ export default function Drawing(props) {
   return (
     <div className={`${utilStyles.center} ${utilStyles.fullPage}`}>
       <h1 className={utilStyles.headingLg}>Draw: "{props.word}"</h1>
-      <div>
-        <button className={utilStyles.smallButton} onClick={switchToPen}>Pen</button>
-        <button className={utilStyles.smallButton} onClick={switchToEraser}>Eraser</button>
-        <button className={utilStyles.smallButton} onClick={clearCanvas}>Clear All</button>
-        <Timer />
+      <div className={styles.toolbar}>
+        <div>
+          <button className={utilStyles.smallButton} onClick={switchToPen}>
+            Pen
+          </button>
+          <button className={utilStyles.smallButton} onClick={switchToEraser}>
+            Eraser
+          </button>
+          <button className={utilStyles.smallButton} onClick={clearCanvas}>
+            Clear All
+          </button>
+        </div>
+        <div className={styles.timer}>
+          <Timer />
+        </div>
       </div>
 
       <canvas
@@ -105,14 +116,14 @@ export default function Drawing(props) {
         onMouseUp={() => {
           setIsDrawing(false);
         }}
-        onMouseOut={() => {
-          setIsDrawing(false);
-        }}
+        // onMouseOut={() => {
+        //   setIsDrawing(false);
+        // }}
       />
     </div>
   );
 }
 
 Drawing.propTypes = {
-  word: PropTypes.string.isRequired
-}
+  word: PropTypes.string.isRequired,
+};
