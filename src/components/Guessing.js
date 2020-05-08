@@ -30,9 +30,9 @@ export default function Guessing(props) {
   }, []);
 
   return (
-    <div className={utilStyles.center}>
-      <h1>Guess:</h1>
-      <div>
+    <div className={`${utilStyles.center} ${utilStyles.fullPage}`}>
+      <h1 className={utilStyles.headingLg}>Guess:</h1>
+      <div className={utilStyles.center}>
         <label htmlFor="guess">
           <input
             style={{ textAlign: "center" }}
@@ -43,7 +43,9 @@ export default function Guessing(props) {
             placeholder="What's in the image?"
           />
         </label>
-        <Timer />
+        <div>
+          <Timer />
+        </div>
       </div>
       <img
         src={props.dataURL}

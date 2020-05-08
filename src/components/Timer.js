@@ -1,5 +1,6 @@
 import React, { useState, useContext, useEffect } from "react";
 import { SocketContext } from "../App";
+import utilStyles from "../styles/utils.module.css";
 
 export default function Timer() {
   const [time, setTime] = useState(0);
@@ -15,6 +16,6 @@ export default function Timer() {
   }, [socket])
 
   return (
-    <span>Time left: {time}</span>
+    <span className={utilStyles.heading} style={{ color: time > 10 ? "black" : "#aa0000" }}>Time left: {time}</span>
   )
 };
