@@ -112,9 +112,7 @@ export default function WordChoosing({ words }) {
         >
           Start Drawing!
         </button>
-      ) : (
-        <p>Waiting for host to start...</p>
-      )}
+      ) : null}
     </div>
   );
 }
