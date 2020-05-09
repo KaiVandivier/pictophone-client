@@ -99,7 +99,7 @@ export default function Drawing(props) {
           </button>
         </div>
         <div className={styles.timer}>
-          <Timer />
+          <Timer highlightTimeLow />
         </div>
       </div>
 

@@ -2,20 +2,22 @@ import React, { useState, useContext, useEffect } from "react";
 import { SocketContext } from "../App";
 import utilStyles from "../styles/utils.module.css";
 
-export default function Timer() {
+export default function Timer({ text, highlightTimeLow }) {
   const [time, setTime] = useState(0);
   const socket = useContext(SocketContext);
 
   useEffect(() => {
-    console.log("Adding time listener");
     socket.on("time", setTime)
     return () => {
-      console.log("Removing time listener");
       socket.off("time");
     }
   }, [socket])
 
+  const timeLowStyles = {
+    color: time > 10 ? "black" : "#a00"
+  }
+
   return (
-    <span className={utilStyles.heading} style={{ color: time > 10 ? "black" : "#aa0000" }}>Time left: {time}</span>
+    <span className={utilStyles.headingLg} style={highlightTimeLow ? timeLowStyles : null}>{text} {time}</span>
   )
 };
