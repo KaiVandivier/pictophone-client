@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import { SocketContext } from "../App";
 import Timer from "./Timer";
 import utilStyles from "../styles/utils.module.css";
+import styles from "../styles/Guessing.module.css";
 
 export default function Guessing(props) {
   const socket = useContext(SocketContext);
@@ -15,10 +16,10 @@ export default function Guessing(props) {
    * use the most up-to-date value of the input.
    *
    * Would it work if `useEffect` had a memoized function as a dependency
-   * and thus updated when the function value changed? This would call 
-   * `useEffect` and add a listener every time the input changed, so we 
+   * and thus updated when the function value changed? This would call
+   * `useEffect` and add a listener every time the input changed, so we
    * would need to clean up the listener at the end of useEffect by
-   * returning a cleanup function.  This seems clunky though. 
+   * returning a cleanup function.  This seems clunky though.
    */
   const input = useRef(null);
 
@@ -27,22 +28,25 @@ export default function Guessing(props) {
     socket.once("guessing-time-up", () =>
       socket.emit("guess-data", input.current.value)
     );
-  }, []);
+  }, [socket]);
 
   return (
     <div className={`${utilStyles.center} ${utilStyles.fullPage}`}>
       <h1 className={utilStyles.headingLg}>Guess:</h1>
-      <div className={utilStyles.center}>
-        <label htmlFor="guess">
-          <input
-            style={{ textAlign: "center" }}
-            ref={input}
-            type="text"
-            name="guess"
-            id="guess"
-            placeholder="What's in the image?"
-          />
-        </label>
+      <div className={styles.gridContainer}>
+        <div />
+        <div className={utilStyles.center}>
+          <label htmlFor="guess">
+            <input
+              style={{ textAlign: "center" }}
+              ref={input}
+              type="text"
+              name="guess"
+              id="guess"
+              placeholder="What's in the image?"
+            />
+          </label>
+        </div>
         <div>
           <Timer />
         </div>
@@ -57,5 +61,5 @@ export default function Guessing(props) {
 }
 
 Guessing.propTypes = {
-  dataURL: PropTypes.string.isRequired
-}
+  dataURL: PropTypes.string.isRequired,
+};
