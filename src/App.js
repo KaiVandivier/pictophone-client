@@ -100,7 +100,7 @@ function App() {
               <input
                 type="text"
                 id="join-room"
-                style={{ textAlign: "center" }}
+                style={{ textAlign: "center", margin: "0.5rem auto" }}
                 placeholder="Enter Room ID"
                 onChange={(e) => {
                   setRoomInput(e.target.value);
