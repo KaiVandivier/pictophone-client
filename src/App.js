@@ -39,7 +39,7 @@ function App() {
   const [playerName, setPlayerName] = useState("");
 
   useEffect(() => {
-    socket.on("message", alert);
+    socket.on("message", console.log);
     socket.on("room-update", setRoom);
 
     return () => {
