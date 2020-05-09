@@ -1,6 +1,7 @@
 const msgs = Object.freeze({
   TOGGLE_READY: "toggle-ready",
   START_GAME: "start-game",
+  CONTINUE: "continue",
 
   // ready: "ready",
   // loadWordChoosing: "choose-word",
