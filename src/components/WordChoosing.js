@@ -98,14 +98,13 @@ export default function WordChoosing({ words }) {
           </button>
         </fieldset>
       </form>
-      {/* <hr className={utilStyles.hr} /> */}
       {allReady ? (
         <p>Everyone is ready! Waiting for host to start.</p>
       ) : (
         <p>Waiting for everyone to choose a word...</p>
       )}
       {/* Add/remove `true` for testing */}
-      {true || socket.id === room.creatorId ? (
+      {socket.id === room.creatorId ? (
         <button
           className={`${utilStyles.smallButton} ${utilStyles.greenButton}`}
           onClick={() => socket.emit(msgs.CONTINUE)}
