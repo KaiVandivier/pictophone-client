@@ -1,0 +1,21 @@
+.roomItem {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  grid-gap: 2rem;
+  max-width: 450px;
+  align-items: center;
+  justify-items: start;
+  border-top: 1px solid lightgrey;
+}
+
+.roomItem input {
+  display: block;
+  max-width: 200px;
+  text-align: center;
+}
+
+.roomList {
+  margin: 0.5rem 0;
+  list-style: none;
+  padding: 0;
+}

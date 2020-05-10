@@ -3,6 +3,7 @@ import socketIOClient from "socket.io-client";
 import { endpoint, prodEndpoint } from "./config";
 import GameRoom from "./components/GameRoom";
 import utilStyles from "./styles/utils.module.css";
+import styles from "./styles/Homepage.module.css";
 
 // testing Waiting
 // import Waiting from "./components/Waiting";
@@ -33,14 +34,17 @@ export const SocketContext = React.createContext(socket);
 export const RoomContext = React.createContext(null);
 
 function App() {
-  const [roomIds, setRoomIds] = useState([]);
+  const [rooms, setRooms] = useState([]);
   const [room, setRoom] = useState(null);
   const [roomInput, setRoomInput] = useState("");
   const [playerName, setPlayerName] = useState("");
+  const [playerNameSubmitted, setPlayNameSubmitted] = useState(false);
 
   useEffect(() => {
     socket.on("message", console.log);
     socket.on("room-update", setRoom);
+
+    getRooms();
 
     return () => {
       socket.off("room-update");
@@ -57,26 +61,30 @@ function App() {
   }
 
   function getRooms() {
-    socket.once("all-rooms", setRoomIds);
-    socket.emit("get-rooms");
+    socket.emit("get-rooms", setRooms); // testing Ack
   }
 
   return (
     <SocketContext.Provider value={socket}>
       {/* `room` value can be changed for testing (remember to change for production) */}
-      <RoomContext.Provider value={room}> {/* testRoomData */}
-
+      <RoomContext.Provider value={room}>
+        {/* testRoomData */}
         {/* <Waiting /> */}
         {/* <WordChoosing words={testWords} /> */}
         {/* <Drawing word={"magic carpet"} /> */}
         {/* <Guessing dataURL={testDataURL} /> */}
         {/* <Replay /> */}
         {/* <Countdown message={"Get ready to draw!"} /> */}
+        {/* If the home-page logic were moved into its own component, it could still modify room on RoomContext I believe */}
 
         {!room ? (
           <div className={`${utilStyles.center} ${utilStyles.fullPage}`}>
             <h1 className={utilStyles.titleHome}>Pict-o-phone!</h1>
-            <fieldset className={`${utilStyles.center} ${utilStyles.fieldset}`}>
+
+            <fieldset
+              disabled={playerNameSubmitted}
+              className={`${utilStyles.center} ${utilStyles.fieldset}`}
+            >
               <label htmlFor="player-name">
                 <h2 className={utilStyles.heading}>1. Choose a Name:</h2>
               </label>
@@ -89,60 +97,68 @@ function App() {
                   setPlayerName(e.target.value);
                 }}
               />
-            </fieldset>
-
-            <fieldset className={`${utilStyles.center} ${utilStyles.fieldset}`}>
-              <label htmlFor="join-room">
-                <span className={utilStyles.heading}>
-                  2. Join or Create Room:
-                </span>
-              </label>
-              <input
-                type="text"
-                id="join-room"
-                style={{ textAlign: "center", margin: "0.5rem auto" }}
-                placeholder="Enter Room ID"
-                onChange={(e) => {
-                  setRoomInput(e.target.value);
+              <button
+                disabled={playerName.length < 1}
+                className={utilStyles.smallButton}
+                onClick={() => {
+                  getRooms();
+                  setPlayNameSubmitted(true);
                 }}
-              />
-              <div>
-                <button
-                  onClick={() => joinRoom(roomInput)}
-                  className={utilStyles.smallButton}
-                  disabled={roomInput.length !== 22 || playerName.length < 1}
-                >
-                  Join Room
-                </button>
-                <button
-                  onClick={createRoom}
-                  className={utilStyles.smallButton}
-                  disabled={playerName.length < 1}
-                >
-                  Create Room
-                </button>
-                <button
-                  onClick={getRooms}
-                  className={utilStyles.smallButton}
-                  disabled={playerName.length < 1}
-                >
-                  Show Rooms
-                </button>
-              </div>
+              >
+                Submit
+              </button>
             </fieldset>
 
-            {roomIds.map((roomId) => (
-              <p key={roomId}>
-                Room {roomId}
-                {"   "}
-                <button
-                  onClick={() => joinRoom(roomId)}
-                  className={utilStyles.smallButton}
-                >
-                  Join
-                </button>
-              </p>
-            ))}
+            <fieldset
+              disabled={!playerNameSubmitted}
+              className={`${utilStyles.center} ${utilStyles.fieldset}`}
+            >
+              <h2 className={utilStyles.heading}>2. Create or Join Room:</h2>
+
+              <button
+                onClick={createRoom}
+                className={utilStyles.smallButton}
+                disabled={!playerNameSubmitted}
+              >
+                Create Room
+              </button>
+
+              <ul className={styles.roomList}>
+                <li className={styles.roomItem}>
+                  <div>
+                    <input
+                      type="text"
+                      id="join-room"
+                      placeholder="Enter Room ID"
+                      onChange={(e) => {
+                        setRoomInput(e.target.value);
+                      }}
+                    />
+                  </div>
+                  <button
+                    onClick={() => joinRoom(roomInput)}
+                    className={utilStyles.smallButton}
+                    disabled={roomInput.length !== 22 || playerName.length < 1}
+                  >
+                    Join
+                  </button>
+                </li>
+
+                {rooms.map(({ id, name }) => (
+                  <li key={id} className={styles.roomItem}>
+                    <p>{name}</p>
+
+                    <button
+                      onClick={() => joinRoom(id)}
+                      className={utilStyles.smallButton}
+                      disabled={!playerNameSubmitted}
+                    >
+                      Join
+                    </button>
+                  </li>
+                ))}
+              </ul>
+            </fieldset>
           </div>
         ) : (
           <GameRoom room={room} />
