@@ -6,81 +6,119 @@ import styles from "../styles/Drawing.module.css";
 import Timer from "./Timer";
 
 // TODO:
-// CORE: Vulnerable to window size change
+// Cleanliness: would animation work with `state` and setting state with functions to persist values between animation?
 // Feat: Change pen size
 // Feat: Smooth lines?
 
 export default function Drawing(props) {
-  const [isDrawing, setIsDrawing] = useState(false);
-  const [lastX, setLastX] = useState(0);
-  const [lastY, setLastY] = useState(0);
   const [radius, setRadius] = useState(3);
-  const [canvasOffsetX, setCanvasOffsetX] = useState(0);
-  const [canvasOffsetY, setCanvasOffsetY] = useState(0);
-  const [ctx, setCtx] = useState(null);
+
+  // use "refs" here to persist values between animation frames
   const canvas = useRef(null);
+  const requestRef = useRef();
+  const drawingRef = useRef(false);
+  const ctxRef = useRef();
+  const lastPosRef = useRef({ x: 0, y: 0 });
+  const currentPosRef = useRef({ x: 0, y: 0 });
+
   const socket = useContext(SocketContext);
 
   useEffect(() => {
-    const canvasCtx = canvas.current.getContext("2d");
-    canvas.current.width = "640"; //window.innerWidth
+    canvas.current.width = "360"; //window.innerWidth
     canvas.current.height = "480"; // window.innerHeight
-    canvasCtx.strokeStyle = "#222";
-    canvasCtx.fillStyle = "#222";
-    canvasCtx.lineJoin = "round";
-    canvasCtx.lineCap = "round";
-    canvasCtx.lineWidth = 2 * radius;
-    setCtx(canvasCtx);
-    setCanvasOffsetX(canvas.current.offsetLeft);
-    setCanvasOffsetY(canvas.current.offsetTop);
+
+    ctxRef.current = canvas.current.getContext("2d");
+    ctxRef.current.strokeStyle = "#222";
+    ctxRef.current.fillStyle = "#222";
+    ctxRef.current.lineJoin = "round";
+    ctxRef.current.lineCap = "round";
+    ctxRef.current.lineWidth = 2 * radius;
 
     socket.emit("drawing-phase-loaded");
+    // TODO: Convert this to an `ack`:
     socket.once("drawing-time-up", () => {
       socket.emit("image-data", canvas.current.toDataURL());
     });
+
+    requestRef.current = window.requestAnimationFrame(drawLoop);
+    window.addEventListener("mouseup", stopDrawing);
+    window.addEventListener("touchend", stopDrawing);
+
+    return () => {
+      cancelAnimationFrame(requestRef.current);
+      window.removeEventListener("mouseup", stopDrawing);
+      window.removeEventListener("touchend", stopDrawing);
+    };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  function draw(e) {
-    if (!isDrawing) return; // stop the fn from running when they are not moused down
-    ctx.beginPath();
-    ctx.moveTo(lastX, lastY); // start of path
-    ctx.lineTo(e.pageX - canvasOffsetX, e.pageY - canvasOffsetY); // end of path
-    ctx.stroke();
-    setLastX(e.pageX - canvasOffsetX);
-    setLastY(e.pageY - canvasOffsetY);
+  function stopDrawing() {
+    drawingRef.current = false;
+  }
+
+  // Repeatedly animate
+  function drawLoop() {
+    renderCanvas();
+    requestRef.current = window.requestAnimationFrame(drawLoop);
+  }
+
+  // Draw to the canvas
+  function renderCanvas() {
+    if (!drawingRef.current) return;
+    if (lastPosRef.current.x === currentPosRef.current.x && lastPosRef.current.y === currentPosRef.current.y) return;
+    ctxRef.current.beginPath();
+    ctxRef.current.moveTo(lastPosRef.current.x, lastPosRef.current.y);
+    ctxRef.current.lineTo(currentPosRef.current.x, currentPosRef.current.y);
+    ctxRef.current.stroke();
+    lastPosRef.current = { ...currentPosRef.current };
+  }
+
+  // Get the position of the mouse relative to the canvas
+  function getMousePos(canvasDom, mouseEvent) {
+    const rect = canvasDom.getBoundingClientRect();
+    return {
+      x: Math.round(mouseEvent.clientX - rect.left),
+      y: Math.round(mouseEvent.clientY - rect.top),
+    };
+  }
+
+  // Get the position of a touch relative to the canvas
+  function getTouchPos(canvasDom, touchEvent) {
+    var rect = canvasDom.getBoundingClientRect();
+    return {
+      x: Math.round(touchEvent.touches[0].clientX - rect.left),
+      y: Math.round(touchEvent.touches[0].clientY - rect.top),
+    };
   }
 
   function drawDot(e) {
-    ctx.save();
-    ctx.beginPath();
-    ctx.arc(
-      e.pageX - canvasOffsetX,
-      e.pageY - canvasOffsetY,
-      radius,
-      0,
-      Math.PI * 2
-    );
-    ctx.fill();
-    ctx.restore();
+    const currentPos =
+      e.type === "touchstart"
+        ? getTouchPos(canvas.current, e)
+        : getMousePos(canvas.current, e);
+    ctxRef.current.save();
+    ctxRef.current.beginPath();
+    ctxRef.current.arc(currentPos.x, currentPos.y, radius, 0, Math.PI * 2);
+    ctxRef.current.fill();
+    ctxRef.current.restore();
   }
 
   function clearCanvas() {
-    ctx.clearRect(0, 0, canvas.current.width, canvas.current.height);
+    ctxRef.current.clearRect(0, 0, canvas.current.width, canvas.current.height);
   }
 
   function switchToPen() {
     setRadius(3);
-    ctx.lineWidth = 6;
-    ctx.strokeStyle = "#222";
-    ctx.fillStyle = "#222";
+    ctxRef.current.lineWidth = 6;
+    ctxRef.current.strokeStyle = "#222";
+    ctxRef.current.fillStyle = "#222";
   }
 
   function switchToEraser() {
     setRadius(10);
-    ctx.lineWidth = 20;
-    ctx.strokeStyle = "#fff";
-    ctx.fillStyle = "#fff";
+    ctxRef.current.lineWidth = 20;
+    ctxRef.current.strokeStyle = "#fafaff";
+    ctxRef.current.fillStyle = "#fafaff";
   }
 
   return (
@@ -107,18 +145,30 @@ export default function Drawing(props) {
         ref={canvas}
         className={utilStyles.drawing}
         onMouseDown={(e) => {
-          setIsDrawing(true);
-          setLastX(e.pageX - canvasOffsetX);
-          setLastY(e.pageY - canvasOffsetY);
+          e.preventDefault(); // fixes selecting text on page
           drawDot(e);
+          const mousePos = getMousePos(canvas.current, e);
+          lastPosRef.current = { ...mousePos };
+          currentPosRef.current = { ...mousePos };
+          drawingRef.current = true;
         }}
-        onMouseMove={draw}
-        onMouseUp={() => {
-          setIsDrawing(false);
+        onMouseMove={(e) => {
+          currentPosRef.current = getMousePos(canvas.current, e);
         }}
-        // onMouseOut={() => {
-        //   setIsDrawing(false);
-        // }}
+        onTouchStart={(e) => {
+          drawDot(e);
+          e.preventDefault();
+          const touchPos = getTouchPos(canvas.current, e);
+          lastPosRef.current = { ...touchPos };
+          currentPosRef.current = { ...touchPos };
+          drawingRef.current = true;
+        }}
+        onTouchMove={(e) => {
+          e.preventDefault();
+          currentPosRef.current = getTouchPos(canvas.current, e);
+        }}
+        onTouchEnd={(e) => e.preventDefault()}
+        // `mouseUp` listener moved to `window`
       />
     </div>
   );
