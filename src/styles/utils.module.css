@@ -12,15 +12,15 @@
 }
 
 .headingLg {
+  margin: 1rem 0 0;
   font-family: "Eczar", serif;
   font-size: 2.5rem;
-  margin: 1rem 0 0;
   font-weight: 400;
+  line-height: 1;
 }
 
 .drawing {
   display: block;
-  touch-action: none;
   border: 1px solid black;
   margin: 0;
   box-shadow:
@@ -31,6 +31,10 @@
     0 41.8px 33.4px rgba(0, 0, 0, 0.05),
     0 100px 80px rgba(0, 0, 0, 0.07)
   ;
+}
+
+canvas.drawing {
+  touch-action: none;
 }
 
 .button {

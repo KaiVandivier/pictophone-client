@@ -48,7 +48,7 @@ export default function Guessing(props) {
           </label>
         </div>
         <div>
-          <Timer />
+          <Timer highlightTimeLow/>
         </div>
       </div>
       <img

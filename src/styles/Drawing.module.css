@@ -2,11 +2,16 @@
   display: flex;
   width: 100%;
   justify-content: space-between;
+  align-items: center;
   padding: 0 2rem;
-  max-width: 640px;
+  max-width: 360px;
+}
+
+.toolbar button {
+  font-size: 0.8rem;
 }
 
 .timer {
-  align-self: end;
+  align-self: flex-end;
   padding-right: 0.5rem;
 }
