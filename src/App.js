@@ -81,7 +81,7 @@ function App() {
           <div className={`${utilStyles.center} ${utilStyles.fullPage}`}>
             <h1 className={utilStyles.titleHome}>Pict-o-phone!</h1>
 
-            <form>
+            <form onSubmit={(e) => e.preventDefault()}>
               <fieldset
                 disabled={playerNameSubmitted}
                 className={utilStyles.fieldset}
@@ -102,7 +102,8 @@ function App() {
                   <button
                     disabled={playerName.length < 1}
                     className={utilStyles.smallButton}
-                    onClick={() => {
+                    onClick={(e) => {
+                      e.preventDefault()
                       getRooms();
                       setPlayNameSubmitted(true);
                     }}
