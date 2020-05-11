@@ -57,6 +57,8 @@ export default function WordChoosing({ words }) {
           className={`${utilStyles.fieldset} ${utilStyles.center}`}
           disabled={submitted}
         >
+          <div className={utilStyles.center}>
+
           <div className={styles.columns}>
             <div className={utilStyles.center}>
               {words.slice(0, words.length / 2).map(mapWords)}
@@ -96,6 +98,7 @@ export default function WordChoosing({ words }) {
           >
             Submit Choice
           </button>
+          </div>
         </fieldset>
       </form>
       {allReady ? (

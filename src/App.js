@@ -81,83 +81,92 @@ function App() {
           <div className={`${utilStyles.center} ${utilStyles.fullPage}`}>
             <h1 className={utilStyles.titleHome}>Pict-o-phone!</h1>
 
-            <fieldset
-              disabled={playerNameSubmitted}
-              className={`${utilStyles.center} ${utilStyles.fieldset}`}
-            >
-              <label htmlFor="player-name">
-                <h2 className={utilStyles.heading}>1. Choose a Name:</h2>
-              </label>
-              <input
-                type="text"
-                id="player-name"
-                style={{ textAlign: "center" }}
-                placeholder="Enter Your Player Name"
-                onChange={(e) => {
-                  setPlayerName(e.target.value);
-                }}
-              />
-              <button
-                disabled={playerName.length < 1}
-                className={utilStyles.smallButton}
-                onClick={() => {
-                  getRooms();
-                  setPlayNameSubmitted(true);
-                }}
+            <form>
+              <fieldset
+                disabled={playerNameSubmitted}
+                className={utilStyles.fieldset}
               >
-                Submit
-              </button>
-            </fieldset>
+                <div className={utilStyles.center}>
+                  <label htmlFor="player-name">
+                    <h2 className={utilStyles.heading}>1. Choose a Name:</h2>
+                  </label>
+                  <input
+                    type="text"
+                    id="player-name"
+                    style={{ textAlign: "center" }}
+                    placeholder="Enter Your Player Name"
+                    onChange={(e) => {
+                      setPlayerName(e.target.value);
+                    }}
+                  />
+                  <button
+                    disabled={playerName.length < 1}
+                    className={utilStyles.smallButton}
+                    onClick={() => {
+                      getRooms();
+                      setPlayNameSubmitted(true);
+                    }}
+                    type="submit"
+                  >
+                    Submit
+                  </button>
+                </div>
+              </fieldset>
+            </form>
 
             <fieldset
               disabled={!playerNameSubmitted}
-              className={`${utilStyles.center} ${utilStyles.fieldset}`}
+              className={utilStyles.fieldset}
             >
-              <h2 className={utilStyles.heading}>2. Create or Join Room:</h2>
+              <div className={utilStyles.center}>
+                <h2 className={utilStyles.heading}>2. Create or Join Room:</h2>
 
-              <button
-                onClick={createRoom}
-                className={utilStyles.smallButton}
-                disabled={!playerNameSubmitted}
-              >
-                Create Room
-              </button>
+                <button
+                  onClick={createRoom}
+                  className={utilStyles.smallButton}
+                  disabled={!playerNameSubmitted}
+                >
+                  Create Room
+                </button>
 
-              <ul className={styles.roomList}>
-                <li className={styles.roomItem}>
-                  <div>
-                    <input
-                      type="text"
-                      id="join-room"
-                      placeholder="Enter Room ID"
-                      onChange={(e) => {
-                        setRoomInput(e.target.value);
-                      }}
-                    />
-                  </div>
-                  <button
-                    onClick={() => joinRoom(roomInput)}
-                    className={utilStyles.smallButton}
-                    disabled={roomInput.length !== 22 || playerName.length < 1}
-                  >
-                    Join
-                  </button>
-                </li>
-
-                {rooms.map(({ id, name }) => (
-                  <li key={id} className={styles.roomItem}>
-                    <p>{name}</p>
-
+                <ul className={styles.roomList}>
+                  <li className={styles.roomItem}>
+                    <div>
+                      <input
+                        type="text"
+                        id="join-room"
+                        placeholder="Enter Room ID"
+                        onChange={(e) => {
+                          setRoomInput(e.target.value);
+                        }}
+                      />
+                    </div>
                     <button
-                      onClick={() => joinRoom(id)}
+                      onClick={() => joinRoom(roomInput)}
                       className={utilStyles.smallButton}
-                      disabled={!playerNameSubmitted}
+                      disabled={
+                        roomInput.length !== 22 || playerName.length < 1
+                      }
                     >
                       Join
                     </button>
                   </li>
-                ))}
-              </ul>
+
+                  {rooms.map(({ id, name }) => (
+                    <li key={id} className={styles.roomItem}>
+                      <p>{name}</p>
+
+                      <button
+                        onClick={() => joinRoom(id)}
+                        className={utilStyles.smallButton}
+                        disabled={!playerNameSubmitted}
+                      >
+                        Join
+                      </button>
+                    </li>
+                  ))}
+                </ul>
+              </div>
             </fieldset>
           </div>
         ) : (

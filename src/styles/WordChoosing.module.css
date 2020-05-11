@@ -1,6 +1,6 @@
 .columns {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: auto auto;
   grid-gap: 1rem;
   max-width: 450px;
 }
@@ -10,8 +10,6 @@
   align-items: center;
   justify-content: center;
   width: max-content;
-  border: 1px solid purple;
-  border-radius: 1rem;
   min-height: 2.5rem;
   padding: 0 2rem;
   margin-bottom: 0.3rem;
