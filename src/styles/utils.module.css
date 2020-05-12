@@ -123,3 +123,15 @@ canvas.drawing {
   width: 80%;
   background-image: linear-gradient(to right, white, black, white);
 }
+
+.textButton {
+  border: none;
+  background: none;
+  font-size: 0.8rem;
+  color: #a16edb;
+  cursor: pointer;
+}
+
+.textButton:hover {
+  text-decoration: underline;
+}

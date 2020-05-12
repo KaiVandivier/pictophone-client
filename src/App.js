@@ -130,6 +130,8 @@ function App() {
                   Create Room
                 </button>
 
+                <button onClick={getRooms} className={utilStyles.textButton}>Refresh Rooms</button>
+
                 <ul className={styles.roomList}>
                   <li className={styles.roomItem}>
                     <div>
