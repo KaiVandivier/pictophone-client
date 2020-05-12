@@ -1,5 +1,20 @@
 .gridContainer {
+  /* border: 1px solid black; */
   display: grid;
-  grid-template-columns: 5rem 1fr 5rem;
+  grid-template-columns: 4rem 1fr 4rem;
+  align-items: center;
   width: 360px;
+}
+
+.gridContainer button {
+  font-size: 0.8rem;
+}
+
+.gridContainer input {
+  max-width: 160px;
+  font-size: 0.8rem;
+}
+
+.timer {
+  width: 4rem;
 }

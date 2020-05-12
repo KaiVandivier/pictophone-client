@@ -77,6 +77,8 @@ canvas.drawing {
     0 32px 80px rgba(0, 0, 0, 0.14)
   ;
   transition: box-shadow 0.15s;
+  transition: width 0.2s;
+  transition: background-color 0.2s;
 }
 
 .smallButton:active, .button:active {
@@ -85,7 +87,7 @@ canvas.drawing {
 
 .greenButton {
   background-color: #77db6e;
-  border: .3rem solid #338a37;
+  border-color: #338a37;
 }
 
 *[disabled] {
@@ -113,7 +115,7 @@ canvas.drawing {
 }
 
 .fieldset input {
-  margin: 0.5rem auto;
+  margin: 0.5rem;
   text-align: center;
 }
 

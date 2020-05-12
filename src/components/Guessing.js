@@ -1,4 +1,4 @@
-import React, { useEffect, useContext, useRef } from "react";
+import React, { useEffect, useContext, useRef, useState } from "react";
 import PropTypes from "prop-types";
 import { SocketContext } from "../App";
 import Timer from "./Timer";
@@ -6,6 +6,7 @@ import utilStyles from "../styles/utils.module.css";
 import styles from "../styles/Guessing.module.css";
 
 export default function Guessing(props) {
+  const [submitted, setSubmitted] = useState(false);
   const socket = useContext(SocketContext);
 
   /**
@@ -34,22 +35,26 @@ export default function Guessing(props) {
     <div className={`${utilStyles.center} ${utilStyles.fullPage}`}>
       <h1 className={utilStyles.headingLg}>Guess:</h1>
       <div className={styles.gridContainer}>
-        <div />
+        <div className={styles.timer}>
+          <Timer highlightTimeLow />
+        </div>
         <div className={utilStyles.center}>
-          <label htmlFor="guess">
-            <input
-              style={{ textAlign: "center" }}
-              ref={input}
-              type="text"
-              name="guess"
-              id="guess"
-              placeholder="What's in the image?"
-            />
-          </label>
+          <fieldset disabled={submitted} className={utilStyles.fieldset}>
+            <label htmlFor="guess">
+              <input
+                ref={input}
+                type="text"
+                name="guess"
+                id="guess"
+                placeholder="What's in the image?"
+              />
+            </label>
+
+          </fieldset>
         </div>
-        <div>
-          <Timer highlightTimeLow/>
-        </div>
+        <button disabled={submitted} className={`${utilStyles.smallButton} ${submitted? utilStyles.greenButton : null}`} onClick={() => setSubmitted(true)}>
+              {"\u2714"}
+            </button>
       </div>
       <img
         src={props.dataURL}

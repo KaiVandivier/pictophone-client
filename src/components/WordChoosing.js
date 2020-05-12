@@ -58,46 +58,45 @@ export default function WordChoosing({ words }) {
           disabled={submitted}
         >
           <div className={utilStyles.center}>
-
-          <div className={styles.columns}>
-            <div className={utilStyles.center}>
-              {words.slice(0, words.length / 2).map(mapWords)}
+            <div className={styles.columns}>
+              <div className={utilStyles.center}>
+                {words.slice(0, words.length / 2).map(mapWords)}
+              </div>
+              <div className={utilStyles.center}>
+                {words.slice(words.length / 2).map(mapWords)}
+              </div>
             </div>
-            <div className={utilStyles.center}>
-              {words.slice(words.length / 2).map(mapWords)}
-            </div>
-          </div>
-          <label
-            className={`${styles.wordChoice} ${
-              checked === "custom" ? styles.checked : null
-            }`}
-            htmlFor="custom"
-          >
-            <input
-              id="custom"
-              type="radio"
-              name="word"
-              value="custom"
-              onChange={handleChange}
-              checked={checked === "custom"}
-            />
-            <input
-              type="text"
-              name="custom"
-              placeholder="or write your own here!"
-              value={customInput}
-              onChange={(e) => setCustomInput(e.target.value)}
-              onClick={() => setChecked("custom")}
-            />
-          </label>
+            <label
+              className={`${styles.wordChoice} ${
+                checked === "custom" ? styles.checked : null
+              }`}
+              htmlFor="custom"
+            >
+              <input
+                id="custom"
+                type="radio"
+                name="word"
+                value="custom"
+                onChange={handleChange}
+                checked={checked === "custom"}
+              />
+              <input
+                type="text"
+                name="custom"
+                placeholder="or write your own here!"
+                value={customInput}
+                onChange={(e) => setCustomInput(e.target.value)}
+                onClick={() => setChecked("custom")}
+              />
+            </label>
 
-          <button
-            type="submit"
-            disabled={!checked}
-            className={utilStyles.smallButton}
-          >
-            Submit Choice
-          </button>
+            <button
+              type="submit"
+              disabled={!checked}
+              className={`${utilStyles.smallButton} ${submitted ? utilStyles.greenButton : null}`}
+            >
+              {!submitted ? "Submit Choice" : "\u2714"}
+            </button>
           </div>
         </fieldset>
       </form>

@@ -15,6 +15,7 @@ export default function Waiting({ onClick }) {
   const room = useContext(RoomContext);
 
   const allReady = room.players.every(({ ready }) => ready);
+  const { ready: playerReady } = room.players.find(({ id }) => id === socket.id)
 
   return (
     <div className={`${utilStyles.center} ${utilStyles.fullPage}`}>
@@ -35,15 +36,17 @@ export default function Waiting({ onClick }) {
         <div className={utilStyles.center}>
           <button
             onClick={() => socket.emit(msgs.TOGGLE_READY)}
-            className={utilStyles.smallButton}
+            className={`${utilStyles.smallButton} ${playerReady ? utilStyles.greenButton : null}`}
           >
-            I'm Ready!
+            {!playerReady ? "I'm Ready!" : "\u2714"}
           </button>
+
           {allReady ? (
             <p>Everyone is ready! Waiting for host to start.</p>
           ) : (
             <p>Waiting for everyone to be ready...</p>
           )}
+
           {socket.id === room.creatorId ? (
             <button
               className={`${utilStyles.smallButton} ${utilStyles.greenButton}`}
@@ -54,8 +57,10 @@ export default function Waiting({ onClick }) {
             </button>
           ) : null}
         </div>
+        
         <div className={`${utilStyles.center} ${styles.playerList}`}>
           <h3>Players:</h3>
+
           <ul>
             {room.players.map(({ name, id, ready }) => (
               <li key={id}>
