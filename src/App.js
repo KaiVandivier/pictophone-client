@@ -12,7 +12,7 @@ import styles from "./styles/Homepage.module.css";
 
 // testing Waiting
 // import Waiting from "./components/Waiting";
-// import { testRoom } from "./lib/testUtils";
+// import { testRoom, testReplayData } from "./lib/testUtils";
 
 // testing WordChoosing
 // import WordChoosing from "./components/WordChoosing"
@@ -75,7 +75,7 @@ function App() {
       {/* `room` value can be changed for testing (remember to change for production) */}
       <RoomContext.Provider value={room}>
         {/* testRoomData */}
-        {/* <Waiting /> */}
+        {/* <Waiting gameReplayData={testReplayData} /> */}
         {/* <WordChoosing words={testWords} /> */}
         {/* <Drawing word={"magic carpet"} /> */}
         {/* <Guessing dataURL={testDataURL} /> */}

@@ -6,6 +6,10 @@
   margin: 0.5rem 0 0.5rem;
 }
 
+.spaceAtBottom {
+  margin-bottom: 5rem;
+}
+
 .gridContainer {
   display: grid;
   grid-template-columns: 1fr 1fr;

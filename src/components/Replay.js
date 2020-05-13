@@ -1,18 +1,15 @@
-import React, { useContext } from "react";
-// import PropTypes from "prop-types";
+import React from "react";
+import PropTypes from "prop-types";
 import utilStyles from "../styles/utils.module.css";
-import { RoomContext } from "../App";
 
-export default function Replay() {
-  const room = useContext(RoomContext);
-
+export default function Replay({ gameReplayData }) {
   return (
-    <div className={`${utilStyles.center} ${utilStyles.fullPage}`}>
+    <section className={`${utilStyles.center}`}>
       <h1 className={utilStyles.headingLg}>
         Round over! Let's see what happened!
       </h1>
       {/* Loop over players: */}
-      {room.players.map((player) => {
+      {gameReplayData.map((player) => {
         const { word, rounds } = player.replayData;
         return (
           <div className={utilStyles.center} key={player.id}>
@@ -47,8 +44,10 @@ export default function Replay() {
           </div>
         );
       })}
-    </div>
+    </section>
   );
 }
 
-Replay.propTypes = {};
+Replay.propTypes = {
+  gameReplayData: PropTypes.array.isRequired,
+};
