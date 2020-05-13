@@ -8,6 +8,8 @@ import msgs from "./lib/messages";
 import utilStyles from "./styles/utils.module.css";
 import styles from "./styles/Homepage.module.css";
 
+// TODO: Replace all this nonsense with "Storybook"
+
 // testing Waiting
 // import Waiting from "./components/Waiting";
 // import { testRoom } from "./lib/testUtils";
@@ -85,7 +87,13 @@ function App() {
           <div className={`${utilStyles.center} ${utilStyles.fullPage}`}>
             <h1 className={utilStyles.titleHome}>Pict-o-phone!</h1>
 
-            <form onSubmit={(e) => e.preventDefault()}>
+            <form
+              onSubmit={(e) => {
+                e.preventDefault();
+                getRooms();
+                setPlayNameSubmitted(true);
+              }}
+            >
               <fieldset
                 disabled={playerNameSubmitted}
                 className={utilStyles.fieldset}
@@ -107,11 +115,6 @@ function App() {
                   <button
                     disabled={playerName.length < 1}
                     className={utilStyles.smallButton}
-                    onClick={(e) => {
-                      e.preventDefault()
-                      getRooms();
-                      setPlayNameSubmitted(true);
-                    }}
                     type="submit"
                   >
                     Submit
@@ -135,7 +138,9 @@ function App() {
                   Create Room
                 </button>
 
-                <button onClick={getRooms} className={utilStyles.textButton}>Refresh Rooms</button>
+                <button onClick={getRooms} className={utilStyles.textButton}>
+                  Refresh Rooms
+                </button>
 
                 <ul className={styles.roomList}>
                   <li className={styles.roomItem}>

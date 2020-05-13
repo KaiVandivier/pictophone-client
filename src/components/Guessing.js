@@ -34,7 +34,10 @@ export default function Guessing(props) {
   return (
     <div className={`${utilStyles.center} ${utilStyles.fullPage}`}>
       <h1 className={utilStyles.headingLg}>Guess:</h1>
-      <div className={styles.gridContainer}>
+      <form className={styles.gridContainer} onSubmit={(e) => {
+        e.preventDefault();
+        setSubmitted(true);
+      }}>
         <div className={styles.timer}>
           <Timer highlightTimeLow />
         </div>
@@ -49,13 +52,18 @@ export default function Guessing(props) {
                 placeholder="What's in the image?"
               />
             </label>
-
           </fieldset>
         </div>
-        <button disabled={submitted} className={`${utilStyles.smallButton} ${submitted? utilStyles.greenButton : null}`} onClick={() => setSubmitted(true)}>
-              {"\u2714"}
-            </button>
-      </div>
+        <button
+          type="submit"
+          disabled={submitted}
+          className={`${utilStyles.smallButton} ${
+            submitted ? utilStyles.greenButton : null
+          }`}
+        >
+          {"\u2714"}
+        </button>
+      </form>
       <img
         src={props.dataURL}
         alt="Previous player's drawing"
