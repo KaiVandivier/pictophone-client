@@ -10,8 +10,14 @@ import Timer from "./Timer";
 // Feat: Change pen size
 // Feat: Smooth lines?
 
+const tools = {
+  PEN: "PEN",
+  ERASER: "ERASER",
+};
+
 export default function Drawing(props) {
   const [radius, setRadius] = useState(3);
+  const [activeTool, setActiveTool] = useState(tools.PEN);
 
   // use "refs" here to persist values between animation frames
   const canvas = useRef(null);
@@ -65,7 +71,11 @@ export default function Drawing(props) {
   // Draw to the canvas
   function renderCanvas() {
     if (!drawingRef.current) return;
-    if (lastPosRef.current.x === currentPosRef.current.x && lastPosRef.current.y === currentPosRef.current.y) return;
+    if (
+      lastPosRef.current.x === currentPosRef.current.x &&
+      lastPosRef.current.y === currentPosRef.current.y
+    )
+      return;
     ctxRef.current.beginPath();
     ctxRef.current.moveTo(lastPosRef.current.x, lastPosRef.current.y);
     ctxRef.current.lineTo(currentPosRef.current.x, currentPosRef.current.y);
@@ -104,11 +114,13 @@ export default function Drawing(props) {
   }
 
   function clearCanvas() {
+    if (!window.confirm("Clear canvas?")) return;
     ctxRef.current.clearRect(0, 0, canvas.current.width, canvas.current.height);
   }
 
   function switchToPen() {
     setRadius(3);
+    setActiveTool(tools.PEN);
     ctxRef.current.lineWidth = 6;
     ctxRef.current.strokeStyle = "#222";
     ctxRef.current.fillStyle = "#222";
@@ -116,6 +128,7 @@ export default function Drawing(props) {
 
   function switchToEraser() {
     setRadius(10);
+    setActiveTool(tools.ERASER);
     ctxRef.current.lineWidth = 20;
     ctxRef.current.strokeStyle = "#fafaff";
     ctxRef.current.fillStyle = "#fafaff";
@@ -126,10 +139,20 @@ export default function Drawing(props) {
       <h1 className={utilStyles.headingLg}>Draw: "{props.word}"</h1>
       <div className={styles.toolbar}>
         <div>
-          <button className={utilStyles.smallButton} onClick={switchToPen}>
+          <button
+            className={`${utilStyles.smallButton} ${
+              activeTool === tools.PEN ? styles.selected : null
+            }`}
+            onClick={switchToPen}
+          >
             Pen
           </button>
-          <button className={utilStyles.smallButton} onClick={switchToEraser}>
+          <button
+            className={`${utilStyles.smallButton} ${
+              activeTool === tools.ERASER ? styles.selected : null
+            }`}
+            onClick={switchToEraser}
+          >
             Eraser
           </button>
           <button className={utilStyles.smallButton} onClick={clearCanvas}>

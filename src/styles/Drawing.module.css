@@ -15,3 +15,9 @@
   align-self: flex-end;
   padding-right: 0.5rem;
 }
+
+.selected {
+  background-color: #ff9328;
+  border-color: #ff7b00;
+  transform: scale(1.1);
+}
