@@ -1,7 +1,14 @@
 const msgs = Object.freeze({
+  MESSAGE: "message",
+  CONTINUE: "continue",
+  GET_ROOMS: "get-rooms",
+  JOIN_ROOM: "join-room",
+  CREATE_ROOM: "create-room",
+  LEAVE_ROOM: "leave-room",
+  ALL_ROOMS: "all-rooms",
+  ROOM_UPDATE: "room-update",
   TOGGLE_READY: "toggle-ready",
   START_GAME: "start-game",
-  CONTINUE: "continue",
 
   // ready: "ready",
   // loadWordChoosing: "choose-word",
