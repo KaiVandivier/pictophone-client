@@ -14,7 +14,7 @@ export default function Timer({ text, highlightTimeLow }) {
   }, [socket])
 
   const timeLowStyles = {
-    color: time > 10 ? "black" : "#a00"
+    color: time > 10 ? "black" : "#d00"
   }
 
   return (
