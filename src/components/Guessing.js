@@ -34,10 +34,14 @@ export default function Guessing(props) {
   return (
     <div className={`${utilStyles.center} ${utilStyles.fullPage}`}>
       <h1 className={utilStyles.headingLg}>Guess:</h1>
-      <form className={styles.gridContainer} onSubmit={(e) => {
-        e.preventDefault();
-        setSubmitted(true);
-      }}>
+      <form
+        autoComplete="off"
+        className={styles.gridContainer}
+        onSubmit={(e) => {
+          e.preventDefault();
+          setSubmitted(true);
+        }}
+      >
         <div className={styles.timer}>
           <Timer highlightTimeLow />
         </div>

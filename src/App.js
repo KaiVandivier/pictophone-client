@@ -88,6 +88,7 @@ function App() {
             <h1 className={utilStyles.titleHome}>Pict-o-phone!</h1>
 
             <form
+              autoComplete="off"
               onSubmit={(e) => {
                 e.preventDefault();
                 getRooms();
