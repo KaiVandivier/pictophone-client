@@ -106,7 +106,7 @@ export default function WordChoosing({ words }) {
         <p>Waiting for everyone to choose a word...</p>
       )}
       {/* Add/remove `true` for testing */}
-      {socket.id === room.creatorId ? (
+      {socket.id === room.hostId ? (
         <button
           className={`${utilStyles.smallButton} ${utilStyles.greenButton}`}
           onClick={() => socket.emit(msgs.CONTINUE)}
