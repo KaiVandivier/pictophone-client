@@ -1,7 +1,10 @@
 import React, { useState, useEffect } from "react";
 import socketIOClient from "socket.io-client";
+
 import { endpoint, prodEndpoint } from "./config";
 import GameRoom from "./components/GameRoom";
+import msgs from "./lib/messages";
+
 import utilStyles from "./styles/utils.module.css";
 import styles from "./styles/Homepage.module.css";
 
@@ -41,27 +44,28 @@ function App() {
   const [playerNameSubmitted, setPlayNameSubmitted] = useState(false);
 
   useEffect(() => {
-    socket.on("message", console.log);
-    socket.on("room-update", setRoom);
+    socket.on(msgs.MESSAGE, (msg) => alert(msg));
+    socket.on(msgs.ROOM_UPDATE, setRoom);
 
     getRooms();
 
     return () => {
-      socket.off("room-update");
-      socket.off("message");
+      socket.off(msgs.ROOM_UPDATE);
+      socket.off(msgs.MESSAGE);
     };
   }, []);
 
   function createRoom() {
-    socket.emit("create-room", playerName);
+    socket.emit(msgs.CREATE_ROOM, playerName);
   }
 
   function joinRoom(roomId) {
-    socket.emit("join-room", roomId, playerName);
+    socket.emit(msgs.JOIN_ROOM, roomId, playerName);
+    getRooms();
   }
 
   function getRooms() {
-    socket.emit("get-rooms", setRooms); // testing Ack
+    socket.emit(msgs.GET_ROOMS, setRooms); // testing Ack
   }
 
   return (
@@ -95,6 +99,7 @@ function App() {
                     id="player-name"
                     style={{ textAlign: "center" }}
                     placeholder="Enter Your Player Name"
+                    value={playerName}
                     onChange={(e) => {
                       setPlayerName(e.target.value);
                     }}

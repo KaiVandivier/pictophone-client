@@ -5,17 +5,17 @@ import styles from "../styles/Waiting.module.css";
 import { SocketContext, RoomContext } from "../App";
 import msgs from "../lib/messages";
 
-// TODO: This and the "sendReady()" function in App could be combined better
-//   Add TOGGLE ready and `startGame` for room creator
-//   Add LeaveRoom
-//   Allow input to change player name
-
-export default function Waiting({ onClick }) {
+export default function Waiting(props) {
   const socket = useContext(SocketContext);
   const room = useContext(RoomContext);
 
+  // In case of "leave room":
+  if (!room) return null;
+
   const allReady = room.players.every(({ ready }) => ready);
-  const { ready: playerReady } = room.players.find(({ id }) => id === socket.id)
+  const { ready: playerReady } = room.players.find(
+    ({ id }) => id === socket.id
+  );
 
   return (
     <div className={`${utilStyles.center} ${utilStyles.fullPage}`}>
@@ -36,7 +36,9 @@ export default function Waiting({ onClick }) {
         <div className={utilStyles.center}>
           <button
             onClick={() => socket.emit(msgs.TOGGLE_READY)}
-            className={`${utilStyles.smallButton} ${playerReady ? utilStyles.greenButton : null}`}
+            className={`${utilStyles.smallButton} ${
+              playerReady ? utilStyles.greenButton : null
+            }`}
           >
             {!playerReady ? "I'm Ready!" : "\u2714"}
           </button>
@@ -57,7 +59,7 @@ export default function Waiting({ onClick }) {
             </button>
           ) : null}
         </div>
-        
+
         <div className={`${utilStyles.center} ${styles.playerList}`}>
           <h3>Players:</h3>
 
@@ -74,7 +76,15 @@ export default function Waiting({ onClick }) {
           </ul>
         </div>
       </div>
+
       <hr className={utilStyles.hr} />
+
+      <button
+        className={utilStyles.textButton}
+        onClick={() => socket.emit(msgs.LEAVE_ROOM)}
+      >
+        {"\u2190"} Leave Room
+      </button>
     </div>
   );
 }
