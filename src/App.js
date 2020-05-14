@@ -79,8 +79,8 @@ function App() {
         {/* <WordChoosing words={testWords} /> */}
         {/* <Drawing word={"magic carpet"} /> */}
         {/* <Guessing dataURL={testDataURL} /> */}
-        {/* <Replay /> */}
         {/* <Countdown message={"Get ready to draw!"} /> */}
+
         {/* If the home-page logic were moved into its own component, it could still modify room on RoomContext I believe */}
 
         {!room ? (

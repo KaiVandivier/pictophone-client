@@ -37,6 +37,10 @@ canvas.drawing {
   touch-action: none;
 }
 
+img.drawing {
+  max-width: 95vw;
+}
+
 .button {
   padding: 0.6rem 2rem;
   margin: 0.5rem;
