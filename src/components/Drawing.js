@@ -30,8 +30,8 @@ export default function Drawing(props) {
   const socket = useContext(SocketContext);
 
   useEffect(() => {
-    canvas.current.width = Math.min(window.innerWidth - 20, 400); //window.innerWidth
-    canvas.current.height = Math.min(window.innerHeight - 50, 600); // window.innerHeight
+    canvas.current.width = Math.min(document.documentElement.clientWidth - 20, 400); //window.innerWidth
+    canvas.current.height = Math.min(document.documentElement.clientHeight - 50, 600); // window.innerHeight
 
     ctxRef.current = canvas.current.getContext("2d");
     ctxRef.current.strokeStyle = "#222";
