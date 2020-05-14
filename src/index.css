@@ -18,3 +18,9 @@ p {
   margin: 0;
   line-height: 1.2;
 }
+
+@media (max-width: 450px) {
+  html {
+    font-size: 80%;
+  }
+}

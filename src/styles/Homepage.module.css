@@ -10,7 +10,7 @@
 
 .roomItem input {
   display: block;
-  max-width: 200px;
+  max-width: 50vw;
   text-align: center;
 }
 

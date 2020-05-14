@@ -1,6 +1,6 @@
 .toolbar {
   display: flex;
-  width: 100%;
+  width: 90%;
   justify-content: space-between;
   align-items: center;
   padding: 0 2rem;
@@ -20,4 +20,8 @@
   background-color: #ff9328;
   border-color: #ff7b00;
   transform: scale(1.1);
+}
+
+.noShadow {
+  box-shadow: none;
 }

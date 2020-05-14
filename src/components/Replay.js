@@ -40,7 +40,7 @@ export default function Replay({ gameReplayData }) {
               }
               return <p>Oops! I don't recognize that data type :(</p>;
             })}
-            <hr />
+            <hr className={utilStyles.hr} />
           </div>
         );
       })}

@@ -30,8 +30,8 @@ export default function Drawing(props) {
   const socket = useContext(SocketContext);
 
   useEffect(() => {
-    canvas.current.width = "360"; //window.innerWidth
-    canvas.current.height = "480"; // window.innerHeight
+    canvas.current.width = Math.min(window.innerWidth - 20, 400); //window.innerWidth
+    canvas.current.height = Math.min(window.innerHeight - 50, 600); // window.innerHeight
 
     ctxRef.current = canvas.current.getContext("2d");
     ctxRef.current.strokeStyle = "#222";
@@ -140,7 +140,7 @@ export default function Drawing(props) {
       <div className={styles.toolbar}>
         <div>
           <button
-            className={`${utilStyles.smallButton} ${
+            className={`${utilStyles.smallButton} ${styles.noShadow} ${
               activeTool === tools.PEN ? styles.selected : null
             }`}
             onClick={switchToPen}
@@ -148,14 +148,17 @@ export default function Drawing(props) {
             Pen
           </button>
           <button
-            className={`${utilStyles.smallButton} ${
+            className={`${utilStyles.smallButton} ${styles.noShadow} ${
               activeTool === tools.ERASER ? styles.selected : null
             }`}
             onClick={switchToEraser}
           >
             Eraser
           </button>
-          <button className={utilStyles.smallButton} onClick={clearCanvas}>
+          <button
+            className={`${utilStyles.smallButton} ${styles.noShadow}`}
+            onClick={clearCanvas}
+          >
             Clear All
           </button>
         </div>
