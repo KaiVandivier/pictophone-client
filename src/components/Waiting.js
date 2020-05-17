@@ -13,7 +13,7 @@ export default function Waiting({ gameReplayData }) {
   const room = useContext(RoomContext);
 
   // In case of "leave room":
-  if (!room) return null;
+  if (!room) return <div>Oops, there's no room!</div>;
 
   const allReady = room.players.every(({ ready }) => ready);
   const { ready: playerReady } = room.players.find(
@@ -24,7 +24,7 @@ export default function Waiting({ gameReplayData }) {
     <div className={`${utilStyles.center} ${utilStyles.fullPage}`}>
       {gameReplayData ? <Replay gameReplayData={gameReplayData} /> : null}
 
-      <section className={gameReplayData ? styles.spaceAtBottom : null}>
+      <section className={`${utilStyles.center} ${gameReplayData ? styles.spaceAtBottom : null}`}>
         <header className={styles.header}>
           {!gameReplayData ? (
             <>
