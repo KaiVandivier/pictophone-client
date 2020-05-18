@@ -1,7 +1,7 @@
 import React from "react";
 import { action } from "@storybook/addon-actions";
 
-import { Button } from "../components/Button";
+import Button from "../components/Button";
 
 export default {
   title: "Button",
@@ -27,8 +27,22 @@ export const LookAtMe = () => (
   </Button>
 );
 
+export const Glow = () => (
+  <Button onClick={action("clicked")} glow>
+    I Glow
+  </Button>
+);
+
 export const TextButton = () => (
   <Button textButton onClick={action("clicked")}>
     Text Button
   </Button>
+);
+
+export const Colors = () => (
+  <>
+    <Button color="green" onClick={action("clicked")}>
+      I'm green
+    </Button>
+  </>
 );

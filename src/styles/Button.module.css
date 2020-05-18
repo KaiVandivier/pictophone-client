@@ -1,6 +1,7 @@
 .button {
   padding: 0.2rem 0.8rem;
   margin: 0.5rem;
+  border: 0.2rem solid transparent;
   font-family: "Eczar", serif;
   font-size: 1.2rem;
   font-weight: 600;
@@ -16,14 +17,16 @@
 
 .default {
   background-color: #a16edb;
-  border: 0.2rem solid #5c338a;
+  background: linear-gradient(#a16edb, #7f53b1);
+  border-color: #5c338a;
 }
 
 .button:active {
   box-shadow: none;
+  /* transform: scale(0.98); */
 }
 
-.greenButton {
+.green {
   background-color: #77db6e;
   border-color: #338a37;
 }
@@ -31,7 +34,7 @@
 .textButton {
   border: none;
   background: none;
-  font-size: 0.8rem;
+  /* font-size: 0.8rem; */
   color: #a16edb;
   cursor: pointer;
 }
@@ -43,11 +46,9 @@
 @keyframes cycleBackground {
   from {
     background-position: 0 0;
-    /* rotate: 0; */
   }
   to {
-    background-position: 300% 0%;
-    /* rotate: 359deg; */
+    background-position: 400% 0%;
   }
 }
 
@@ -59,7 +60,33 @@
     rgb(248, 14, 53) 55%,
     orange 95%
   );
+  /* color: transparent; */
+  /* background-clip: text; */
+  /* box-decoration-break: clone; */
   border: 0.2rem solid transparent;
-  background-size: 300% auto;
-  animation: cycleBackground 5s linear infinite;
+  background-size: 400% auto;
+  animation: cycleBackground 9s linear infinite;
+}
+
+@keyframes glow {
+  0%, 100% {
+    box-shadow: 0 0 5px 3px transparent,
+      0 1.1px 2.7px rgba(0, 0, 0, 0.043),
+      0 2.8px 6.9px rgba(0, 0, 0, 0.062), 0 5.7px 14.2px rgba(0, 0, 0, 0.078),
+      0 11.7px 29.2px rgba(0, 0, 0, 0.097), 0 32px 80px rgba(0, 0, 0, 0.14);
+  }
+  50% {
+    box-shadow: 0 0 8px 5px rgb(255, 230, 0),
+      0 1.1px 2.7px rgba(0, 0, 0, 0.043),
+      0 2.8px 6.9px rgba(0, 0, 0, 0.062), 0 5.7px 14.2px rgba(0, 0, 0, 0.078),
+      0 11.7px 29.2px rgba(0, 0, 0, 0.097), 0 32px 80px rgba(0, 0, 0, 0.14);
+  }
+}
+
+.glow {
+  animation: glow 1.5s ease infinite;
+}
+
+.glow:active {
+  box-shadow: none;
 }
