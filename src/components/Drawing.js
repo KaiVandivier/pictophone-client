@@ -40,11 +40,10 @@ export default function Drawing(props) {
     ctxRef.current.lineCap = "round";
     ctxRef.current.lineWidth = 2 * radius;
 
+    // Confirm loaded (could be ack?)
     socket.emit("drawing-phase-loaded");
-    // TODO: Convert this to an `ack`:
-    socket.once("drawing-time-up", () => {
-      socket.emit("image-data", canvas.current.toDataURL());
-    });
+    // Prepare to respond with data
+    socket.once("get-data", (ack) => ack(canvas.current.toDataURL()));
 
     requestRef.current = window.requestAnimationFrame(drawLoop);
     window.addEventListener("mouseup", stopDrawing);
