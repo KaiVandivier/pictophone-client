@@ -4,6 +4,8 @@ export const testSocket = {
   id: "abc1234",
   on: function (arg) { console.log(arg) },
   emit: function (arg) { console.log(arg) },
+  off: function (arg) { console.log(arg) },
+  once: function (arg) { console.log(arg) },
 }
 
 export const testRoomPlayerNotReady = {
