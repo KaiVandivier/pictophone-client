@@ -18,7 +18,7 @@
   font-weight: 600;
   color: white;
   background-color: #aeb1d4;
-  border: 3px solid #5662df;
+  border: 0.3rem solid #5662df;
   border-radius: 1rem;
   cursor: pointer;
   box-shadow:
@@ -42,6 +42,6 @@
 
 .checked {
   background-color: #ff9328;
-  border: .2rem solid #ff7b00;
+  border: .3rem solid #ff7b00;
   transform: scale(1.1);
 }

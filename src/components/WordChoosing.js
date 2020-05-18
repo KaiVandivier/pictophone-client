@@ -1,9 +1,12 @@
 import React, { useState, useContext } from "react";
 import PropTypes from "prop-types";
-import utilStyles from "../styles/utils.module.css";
-import styles from "../styles/WordChoosing.module.css";
+
 import { SocketContext, RoomContext } from "../App";
+import Button from "./Button";
 import msgs from "../lib/messages";
+
+import styles from "../styles/WordChoosing.module.css";
+import utilStyles from "../styles/utils.module.css";
 
 export default function WordChoosing({ words }) {
   const [checked, setChecked] = useState(null);
@@ -83,20 +86,20 @@ export default function WordChoosing({ words }) {
               <input
                 type="text"
                 name="custom"
-                placeholder="or write your own here!"
+                placeholder="or write your own!"
                 value={customInput}
                 onChange={(e) => setCustomInput(e.target.value)}
                 onClick={() => setChecked("custom")}
               />
             </label>
 
-            <button
+            <Button
               type="submit"
-              disabled={!checked}
-              className={`${utilStyles.smallButton} ${submitted ? utilStyles.greenButton : null}`}
+              disabled={!checked || submitted}
+              color={submitted ? "green" : null}
             >
               {!submitted ? "Submit Choice" : "\u2714"}
-            </button>
+            </Button>
           </div>
         </fieldset>
       </form>
@@ -107,13 +110,13 @@ export default function WordChoosing({ words }) {
       )}
       {/* Add/remove `true` for testing */}
       {socket.id === room.hostId ? (
-        <button
-          className={`${utilStyles.smallButton} ${utilStyles.greenButton}`}
+        <Button
+          color="green"
           onClick={() => socket.emit(msgs.CONTINUE)}
           disabled={!allReady}
         >
           Start Drawing!
-        </button>
+        </Button>
       ) : null}
     </div>
   );

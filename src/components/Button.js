@@ -10,6 +10,7 @@ export default function Button({
   lookAtMe,
   onClick,
   textButton,
+  type,
 }) {
   const classNames = cx({
     [styles.button]: !textButton,
@@ -22,6 +23,7 @@ export default function Button({
 
   return (
     <button
+      type={type}
       disabled={disabled}
       className={classNames}
       onClick={onClick}

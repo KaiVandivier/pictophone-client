@@ -6,6 +6,7 @@ import {
   testSocket,
   testRoomPlayerNotReady,
   testRoomPlayerReady,
+  testRoomAllReady,
   testReplayData,
 } from "../lib/testUtils";
 
@@ -27,8 +28,15 @@ export const PlayerNotReady = () => (
     <Waiting />
   </RoomContext.Provider>
 );
+
 export const PlayerReady = () => (
   <RoomContext.Provider value={{ ...testRoomPlayerReady }}>
+    <Waiting />
+  </RoomContext.Provider>
+);
+
+export const AllReady = () => (
+  <RoomContext.Provider value={{ ...testRoomAllReady }}>
     <Waiting />
   </RoomContext.Provider>
 );
