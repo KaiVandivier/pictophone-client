@@ -15,15 +15,19 @@
   transition: background-color 0.2s;
 }
 
+.button:active {
+  box-shadow: none;
+}
+
+/* Removes dotted line inside button on firefox
+.button::-moz-focus-inner {
+  border: none;
+} */
+
 .purple {
   background-color: #a16edb;
   background: linear-gradient(#a16edb, #7f53b1);
   border-color: #5c338a;
-}
-
-.button:active {
-  box-shadow: none;
-  /* transform: scale(0.98); */
 }
 
 .green {
