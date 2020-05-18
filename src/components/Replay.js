@@ -11,14 +11,17 @@ export default function Replay({ gameReplayData }) {
       <hr className={utilStyles.hr} />
       {/* Loop over players: */}
       {gameReplayData.map((player) => {
-        const { word, rounds } = player.replayData;
         return (
           <div className={utilStyles.center} key={player.id}>
-            <h1 className={utilStyles.heading}>
-              <em>{player.name || player.id}'s word was: </em>
-              <strong>"{word}"</strong>
-            </h1>
-            {rounds.map(({ type, data, playerName }) => {
+            {player.replayData.map(({ type, data, playerName }) => {
+              if (type === "word") {
+                return (
+                  <h1 className={utilStyles.heading}>
+                    <em>{playerName}'s word was: </em>
+                    <strong>"{data}"</strong>
+                  </h1>
+                );
+              }
               if (type === "guess") {
                 return (
                   <h2 className={utilStyles.heading} key={playerName}>
