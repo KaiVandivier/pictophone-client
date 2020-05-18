@@ -130,7 +130,7 @@ img.drawing {
   border: none;
   height: 1px;
   width: 80%;
-  background-image: linear-gradient(to right, white, black, white);
+  background-image: linear-gradient(to right, #fafaff, black, #fafaff);
 }
 
 .textButton {

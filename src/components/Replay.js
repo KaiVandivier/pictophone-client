@@ -8,12 +8,12 @@ export default function Replay({ gameReplayData }) {
       <h1 className={utilStyles.headingLg}>
         Round over! Let's see what happened!
       </h1>
+      <hr className={utilStyles.hr} />
       {/* Loop over players: */}
       {gameReplayData.map((player) => {
         const { word, rounds } = player.replayData;
         return (
           <div className={utilStyles.center} key={player.id}>
-            <hr className={utilStyles.hr} />
             <h1 className={utilStyles.heading}>
               <em>{player.name || player.id}'s word was: </em>
               <strong>"{word}"</strong>
