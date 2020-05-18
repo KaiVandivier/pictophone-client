@@ -130,8 +130,8 @@ export default function Drawing(props) {
     setRadius(10);
     setActiveTool(tools.ERASER);
     ctxRef.current.lineWidth = 20;
-    ctxRef.current.strokeStyle = "#fafaff";
-    ctxRef.current.fillStyle = "#fafaff";
+    ctxRef.current.strokeStyle = "#fff";
+    ctxRef.current.fillStyle = "#fff";
   }
 
   return (

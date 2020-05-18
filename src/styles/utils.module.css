@@ -21,6 +21,7 @@
 
 .drawing {
   display: block;
+  background-color: white;
   border: 1px solid lightgrey;
   margin: 0;
   box-shadow:
