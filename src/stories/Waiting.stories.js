@@ -2,26 +2,39 @@ import React from "react";
 
 import Waiting from "../components/Waiting";
 import { SocketContext, RoomContext } from "../App";
-import { testSocket, testRoom } from "../lib/testUtils";
-
+import {
+  testSocket,
+  testRoomPlayerNotReady,
+  testRoomPlayerReady,
+  testReplayData,
+} from "../lib/testUtils";
 
 export default {
   title: "Waiting",
   component: Waiting,
-  decorators: [Story => (
-    <SocketContext.Provider value={{ ...testSocket }}>
-      <RoomContext.Provider value={{ ...testRoom }}>
+  decorators: [
+    (Story) => (
+      <SocketContext.Provider value={{ ...testSocket }}>
         <Story />
-      </RoomContext.Provider>
-    </SocketContext.Provider>
-  )], // context goes here
+      </SocketContext.Provider>
+    ),
+  ], // context goes here
   // excludeStories: /.*Data$/,
-}
+};
 
-export const Default = () => (
-  <Waiting />
+export const PlayerNotReady = () => (
+  <RoomContext.Provider value={{ ...testRoomPlayerNotReady }}>
+    <Waiting />
+  </RoomContext.Provider>
+);
+export const PlayerReady = () => (
+  <RoomContext.Provider value={{ ...testRoomPlayerReady }}>
+    <Waiting />
+  </RoomContext.Provider>
 );
 
 export const WithReplay = () => (
-  <Waiting gameReplayData />
-)
+  <RoomContext.Provider value={{ ...testRoomPlayerNotReady }}>
+    <Waiting gameReplayData={testReplayData} />
+  </RoomContext.Provider>
+);

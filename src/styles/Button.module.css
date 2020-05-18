@@ -15,7 +15,7 @@
   transition: background-color 0.2s;
 }
 
-.default {
+.purple {
   background-color: #a16edb;
   background: linear-gradient(#a16edb, #7f53b1);
   border-color: #5c338a;
@@ -28,13 +28,14 @@
 
 .green {
   background-color: #77db6e;
+  background: linear-gradient(#77db6e, #66bd5e);
   border-color: #338a37;
 }
 
 .textButton {
   border: none;
   background: none;
-  /* font-size: 0.8rem; */
+  font-size: 1rem;
   color: #a16edb;
   cursor: pointer;
 }

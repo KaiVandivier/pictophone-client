@@ -4,6 +4,7 @@ import PropTypes from "prop-types";
 import Replay from "./Replay";
 import { SocketContext, RoomContext } from "../App";
 import msgs from "../lib/messages";
+import Button from "./Button";
 
 import utilStyles from "../styles/utils.module.css";
 import styles from "../styles/Waiting.module.css";
@@ -24,7 +25,11 @@ export default function Waiting({ gameReplayData }) {
     <div className={`${utilStyles.center} ${utilStyles.fullPage}`}>
       {gameReplayData ? <Replay gameReplayData={gameReplayData} /> : null}
 
-      <section className={`${utilStyles.center} ${gameReplayData ? styles.spaceAtBottom : null}`}>
+      <section
+        className={`${utilStyles.center} ${
+          gameReplayData ? styles.spaceAtBottom : null
+        }`}
+      >
         <header className={styles.header}>
           {!gameReplayData ? (
             <>
@@ -48,33 +53,6 @@ export default function Waiting({ gameReplayData }) {
         <hr className={utilStyles.hr} />
 
         <div className={styles.gridContainer}>
-          <div className={utilStyles.center}>
-            <button
-              onClick={() => socket.emit(msgs.TOGGLE_READY)}
-              className={`${utilStyles.smallButton} ${
-                playerReady ? utilStyles.greenButton : null
-              }`}
-            >
-              {!playerReady ? "I'm Ready!" : "\u2714"}
-            </button>
-
-            {allReady ? (
-              <p>Everyone is ready! Waiting for host to start.</p>
-            ) : (
-              <p>Waiting for everyone to be ready...</p>
-            )}
-
-            {socket.id === room.hostId ? (
-              <button
-                className={`${utilStyles.smallButton} ${utilStyles.greenButton}`}
-                onClick={() => socket.emit(msgs.START_GAME)}
-                disabled={!allReady}
-              >
-                Start Game!
-              </button>
-            ) : null}
-          </div>
-
           <div className={`${utilStyles.center} ${styles.playerList}`}>
             <h3>Players:</h3>
 
@@ -84,22 +62,54 @@ export default function Waiting({ gameReplayData }) {
                   <p className={ready ? styles.ready : null}>
                     {name || id} {id === room.hostId ? "(host)" : null}
                     {" - "}
-                    <small>{ready ? "Ready!" : "Not Ready"}</small>
+                    {ready ? (
+                      <small>Ready!</small>
+                    ) : (
+                      <small className={id === socket.id ? styles.highlight : null}>Not Ready Yet</small>
+                    )}
                   </p>
                 </li>
               ))}
             </ul>
           </div>
+
+          <div className={utilStyles.center}>
+            {!playerReady ? (
+              <p className={styles.highlight}>Ready to start?</p>
+            ) : allReady ? (
+              <p>Everyone is ready! Waiting for host to start.</p>
+            ) : (
+              <p>Waiting for everyone to be ready...</p>
+            )}
+
+            <Button
+              onClick={() => socket.emit(msgs.TOGGLE_READY)}
+              glow={!playerReady}
+              color={playerReady ? "green" : null}
+            >
+              {!playerReady ? "I'm Ready!" : "\u2714"}
+            </Button>
+
+            {socket.id === room.hostId ? (
+              <Button
+                color="green"
+                onClick={() => socket.emit(msgs.START_GAME)}
+                disabled={!allReady}
+              >
+                Start Game!
+              </Button>
+            ) : null}
+          </div>
         </div>
 
         <hr className={utilStyles.hr} />
 
-        <button
-          className={utilStyles.textButton}
+        <Button
+          textButton
           onClick={() => socket.emit(msgs.LEAVE_ROOM)}
         >
           {"\u2190"} Leave Room
-        </button>
+        </Button>
       </section>
     </div>
   );

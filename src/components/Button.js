@@ -5,6 +5,7 @@ import styles from "../styles/Button.module.css";
 export default function Button({
   children,
   color,
+  disabled,
   glow,
   lookAtMe,
   onClick,
@@ -13,14 +14,15 @@ export default function Button({
   const classNames = cx({
     [styles.button]: !textButton,
     [styles.textButton]: textButton,
-    [styles.default]: !color,
+    [styles.purple]: !color && !textButton,
     [styles.green]: color === "green",
     [styles.lookAtMe]: lookAtMe,
     [styles.glow]: glow,
   })
 
   return (
-    <button 
+    <button
+      disabled={disabled}
       className={classNames}
       onClick={onClick}
     >

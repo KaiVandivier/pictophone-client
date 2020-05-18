@@ -38,3 +38,28 @@
 .ready {
   color: green;
 }
+
+@keyframes cycleBackground {
+  from {
+    background-position: 0 0;
+  }
+  to {
+    background-position: 400% 0%;
+  }
+}
+
+.highlight {
+  background: linear-gradient(
+    to left,
+    orange 5%,
+    rgb(248, 14, 53) 45%,
+    rgb(248, 14, 53) 55%,
+    orange 95%
+  );
+  color: transparent;
+  background-clip: text;
+  box-decoration-break: clone;
+  /* border: 0.2rem solid transparent; */
+  background-size: 400% auto;
+  animation: cycleBackground 9s linear infinite;
+}

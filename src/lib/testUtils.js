@@ -6,13 +6,25 @@ export const testSocket = {
   emit: function (arg) { console.log(arg) },
 }
 
-export const testRoom = {
+export const testRoomPlayerNotReady = {
+  id: "rmyrV4kcuXrnTjSzGTAAFu",
+  name: "Ambrow's room",
+  hostId: "abc1234",
+  players: [
+    { id: "abc1234", name: "Ambrow", ready: false },
+    { id: "def5678", name: "Skina", ready: true },
+    { id: "qwerty1", name: "Tam", ready: true },
+    { id: "9999999", name: "Log", ready: false }
+  ]
+}
+
+export const testRoomPlayerReady = {
   id: "rmyrV4kcuXrnTjSzGTAAFu",
   name: "Ambrow's room",
   hostId: "abc1234",
   players: [
     { id: "abc1234", name: "Ambrow", ready: true },
-    { id: "def5678", name: "Skina", ready: false },
+    { id: "def5678", name: "Skina", ready: true },
     { id: "qwerty1", name: "Tam", ready: true },
     { id: "9999999", name: "Log", ready: false }
   ]

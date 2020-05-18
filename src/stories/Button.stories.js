@@ -41,6 +41,9 @@ export const TextButton = () => (
 
 export const Colors = () => (
   <>
+    <Button onClick={action("clicked")}>
+      I'm purple
+    </Button>
     <Button color="green" onClick={action("clicked")}>
       I'm green
     </Button>
