@@ -44,7 +44,7 @@
     background-position: 0 0;
   }
   to {
-    background-position: 400% 0%;
+    background-position: 300% 0%;
   }
 }
 
@@ -60,6 +60,6 @@
   background-clip: text;
   box-decoration-break: clone;
   /* border: 0.2rem solid transparent; */
-  background-size: 400% auto;
-  animation: cycleBackground 9s linear infinite;
+  background-size: 300% auto;
+  animation: cycleBackground 7s linear infinite;
 }
