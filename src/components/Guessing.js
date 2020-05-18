@@ -1,7 +1,10 @@
 import React, { useEffect, useContext, useRef, useState } from "react";
 import PropTypes from "prop-types";
+
 import { SocketContext } from "../App";
 import Timer from "./Timer";
+import Button from "./Button";
+
 import utilStyles from "../styles/utils.module.css";
 import styles from "../styles/Guessing.module.css";
 
@@ -49,6 +52,8 @@ export default function Guessing(props) {
           <fieldset disabled={submitted} className={utilStyles.fieldset}>
             <label htmlFor="guess">
               <input
+                className={styles.glow}
+                disabled={submitted}
                 ref={input}
                 type="text"
                 name="guess"
@@ -58,15 +63,15 @@ export default function Guessing(props) {
             </label>
           </fieldset>
         </div>
-        <button
+        <Button
           type="submit"
           disabled={submitted}
-          className={`${utilStyles.smallButton} ${
-            submitted ? utilStyles.greenButton : null
-          }`}
+          color={
+            submitted ? "green" : null
+          }
         >
           {"\u2714"}
-        </button>
+        </Button>
       </form>
       <img
         src={props.dataURL}
