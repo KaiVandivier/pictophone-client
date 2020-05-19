@@ -8,34 +8,10 @@ import msgs from "./lib/messages";
 import utilStyles from "./styles/utils.module.css";
 import styles from "./styles/Homepage.module.css";
 
-// TODO: Replace all this nonsense with "Storybook"
-
-// testing Waiting
-// import Waiting from "./components/Waiting";
-// import { testRoom, testReplayData } from "./lib/testUtils";
-
-// testing WordChoosing
-// import WordChoosing from "./components/WordChoosing"
-// import { testWords } from "./lib/testUtils";
-
-// testing Drawing
-// import Drawing from "./components/Drawing";
-
-// testing Guessing
-// import Guessing from "./components/Guessing";
-// import { testDataURL } from "./lib/testUtils";
-
-// testing Replay
-// import Replay from "./components/Replay";
-// import { testRoomData } from "./lib/testUtils";
-
-// Testing Countdown
-// import Countdown from "./components/Countdown";
-
 const ENDPOINT =
   process.env.NODE_ENV === "production" ? prodEndpoint : endpoint;
 const socket = socketIOClient(ENDPOINT);
-export const SocketContext = React.createContext(socket);
+export const SocketContext = React.createContext(null);
 export const RoomContext = React.createContext(null);
 
 function App() {
@@ -67,23 +43,15 @@ function App() {
   }
 
   function getRooms() {
-    socket.emit(msgs.GET_ROOMS, setRooms); // testing Ack
+    socket.emit(msgs.GET_ROOMS, setRooms);
   }
 
   return (
     <SocketContext.Provider value={socket}>
-      {/* `room` value can be changed for testing (remember to change for production) */}
       <RoomContext.Provider value={room}>
-        {/* testRoomData */}
-        {/* <Waiting gameReplayData={testReplayData} /> */}
-        {/* <WordChoosing words={testWords} /> */}
-        {/* <Drawing word={"magic carpet"} /> */}
-        {/* <Guessing dataURL={testDataURL} /> */}
-        {/* <Countdown message={"Get ready to draw!"} /> */}
-
-        {/* If the home-page logic were moved into its own component, it could still modify room on RoomContext I believe */}
-
-        {!room ? (
+        {room ? (
+          <GameRoom />
+        ) : (
           <div className={`${utilStyles.center} ${utilStyles.fullPage}`}>
             <h1 className={utilStyles.titleHome}>Pict-o-phone!</h1>
 
@@ -183,8 +151,6 @@ function App() {
               </div>
             </fieldset>
           </div>
-        ) : (
-          <GameRoom room={room} />
         )}
       </RoomContext.Provider>
     </SocketContext.Provider>
