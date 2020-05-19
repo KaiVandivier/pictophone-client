@@ -3,6 +3,7 @@ import socketIOClient from "socket.io-client";
 
 import { endpoint, prodEndpoint } from "./config";
 import GameRoom from "./components/GameRoom";
+import Button from "./components/Button";
 import msgs from "./lib/messages";
 
 import utilStyles from "./styles/utils.module.css";
@@ -71,6 +72,7 @@ function App() {
                   <label htmlFor="player-name">
                     <h2 className={utilStyles.heading}>1. Choose a Name:</h2>
                   </label>
+
                   <input
                     type="text"
                     id="player-name"
@@ -81,13 +83,13 @@ function App() {
                       setPlayerName(e.target.value);
                     }}
                   />
-                  <button
-                    disabled={playerName.length < 1}
-                    className={utilStyles.smallButton}
+
+                  <Button
+                    disabled={playerName.length < 1 || playerNameSubmitted}
                     type="submit"
                   >
                     Submit
-                  </button>
+                  </Button>
                 </div>
               </fieldset>
             </form>
@@ -99,19 +101,31 @@ function App() {
               <div className={utilStyles.center}>
                 <h2 className={utilStyles.heading}>2. Create or Join Room:</h2>
 
-                <button
+                <Button
                   onClick={createRoom}
-                  className={utilStyles.smallButton}
                   disabled={!playerNameSubmitted}
                 >
                   Create Room
-                </button>
+                </Button>
 
-                <button onClick={getRooms} className={utilStyles.textButton}>
+                <Button textButton onClick={getRooms}>
                   Refresh Rooms
-                </button>
+                </Button>
 
                 <ul className={styles.roomList}>
+                  {rooms.map(({ id, name }) => (
+                    <li key={id} className={styles.roomItem}>
+                      <p>{name}</p>
+
+                      <Button
+                        onClick={() => joinRoom(id)}
+                        disabled={!playerNameSubmitted}
+                      >
+                        Join
+                      </Button>
+                    </li>
+                  ))}
+
                   <li className={styles.roomItem}>
                     <div>
                       <input
@@ -123,30 +137,15 @@ function App() {
                         }}
                       />
                     </div>
-                    <button
+                    <Button
                       onClick={() => joinRoom(roomInput)}
-                      className={utilStyles.smallButton}
                       disabled={
                         roomInput.length !== 22 || playerName.length < 1
                       }
                     >
                       Join
-                    </button>
+                    </Button>
                   </li>
-
-                  {rooms.map(({ id, name }) => (
-                    <li key={id} className={styles.roomItem}>
-                      <p>{name}</p>
-
-                      <button
-                        onClick={() => joinRoom(id)}
-                        className={utilStyles.smallButton}
-                        disabled={!playerNameSubmitted}
-                      >
-                        Join
-                      </button>
-                    </li>
-                  ))}
                 </ul>
               </div>
             </fieldset>

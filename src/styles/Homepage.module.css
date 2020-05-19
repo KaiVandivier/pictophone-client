@@ -12,6 +12,7 @@
   display: block;
   max-width: 50vw;
   text-align: center;
+  margin: 0;
 }
 
 .roomList {
