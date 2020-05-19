@@ -20,7 +20,7 @@ p {
   line-height: 1.2;
 }
 
-@media (max-width: 450px) {
+@media (max-width: 380px) {
   html {
     font-size: 80%;
   }
