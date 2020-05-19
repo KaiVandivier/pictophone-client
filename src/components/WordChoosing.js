@@ -101,8 +101,9 @@ export default function WordChoosing({ words }) {
 
             <Button
               type="submit"
+              glow
               disabled={!checked || submitted}
-              color={submitted ? "green" : null}
+              color={"green"}
             >
               {!submitted ? "Submit Choice" : "\u2714"}
             </Button>
@@ -118,6 +119,7 @@ export default function WordChoosing({ words }) {
 
       {socket.id === room.hostId ? (
         <Button
+          glow
           color="green"
           onClick={() => socket.emit(msgs.CONTINUE)}
           disabled={!allReady}

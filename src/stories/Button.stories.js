@@ -10,15 +10,10 @@ export default {
 };
 
 export const Default = () => (
-  <Button onClick={action("clicked")}>Hello Button</Button>
-);
-
-export const Emoji = () => (
-  <Button onClick={action("clicked")}>
-    <span role="img" aria-label="so cool">
-      😀 😎 👍 💯
-    </span>
-  </Button>
+  <>
+    <Button onClick={action("clicked")}>Default</Button>
+    <Button small onClick={action("clicked")}>Small</Button>
+  </>
 );
 
 export const LookAtMe = () => (
@@ -46,6 +41,9 @@ export const Colors = () => (
     </Button>
     <Button color="green" onClick={action("clicked")}>
       I'm green
+    </Button>
+    <Button color="orange" onClick={action("clicked")}>
+      I'm orange
     </Button>
   </>
 );

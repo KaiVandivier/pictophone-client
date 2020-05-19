@@ -75,17 +75,18 @@ export default function Waiting({ gameReplayData }) {
 
           <div className={utilStyles.center}>
             {!playerReady ? (
-              <p className={styles.highlight}>Ready to start?</p>
+              <p>Ready to start?</p>
             ) : allReady ? (
-              <p>Everyone is ready! Waiting for host to start.</p>
+              <p className={styles.highlight}>Everyone is ready! Waiting for host to start.</p>
             ) : (
               <p>Waiting for everyone to be ready...</p>
             )}
 
             <Button
               onClick={() => socket.emit(msgs.TOGGLE_READY)}
-              glow={!playerReady}
-              color={playerReady ? "green" : null}
+              glow
+              color="green"
+              disabled={playerReady}
             >
               {!playerReady ? "I'm Ready!" : "\u2714"}
             </Button>
@@ -93,6 +94,7 @@ export default function Waiting({ gameReplayData }) {
             {socket.id === room.hostId ? (
               <Button
                 color="green"
+                glow
                 onClick={() => socket.emit(msgs.START_GAME)}
                 disabled={!allReady}
               >

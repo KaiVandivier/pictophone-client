@@ -8,7 +8,9 @@ export default function Button({
   disabled,
   glow,
   lookAtMe,
+  noShadow,
   onClick,
+  small,
   textButton,
   type,
 }) {
@@ -17,9 +19,12 @@ export default function Button({
     [styles.textButton]: textButton,
     [styles.purple]: !color && !textButton,
     [styles.green]: color === "green",
+    [styles.orange]: color === "orange",
     [styles.lookAtMe]: lookAtMe,
     [styles.glow]: glow,
-  })
+    [styles.small]: small,
+    [styles.noShadow]: noShadow,
+  });
 
   return (
     <button
@@ -30,5 +35,5 @@ export default function Button({
     >
       {children}
     </button>
-  )
-};
+  );
+}

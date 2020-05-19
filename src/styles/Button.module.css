@@ -1,12 +1,15 @@
+/* Default styles */
 .button {
-  padding: 0.2rem 0.8rem;
+  padding: 3px 0.8rem;
+  position: relative;
   margin: 0.5rem;
-  border: 0.2rem solid transparent;
+  /* rem calculations rounded badly sometimes, therefore px here: */
+  border: 3px solid rgba(0,0,0,0.25);
+  border-radius: 0.5rem;
   font-family: "Eczar", serif;
   font-size: 1.2rem;
   font-weight: 600;
   color: white;
-  border-radius: 0.5rem;
   cursor: pointer;
   box-shadow: 0 1.1px 2.7px rgba(0, 0, 0, 0.043),
     0 2.8px 6.9px rgba(0, 0, 0, 0.062), 0 5.7px 14.2px rgba(0, 0, 0, 0.078),
@@ -15,25 +18,37 @@
   transition: background-color 0.2s;
 }
 
+.button:not([disabled]):not(:active)::before {
+  /* Adds 3D effect to button */
+  content: "";
+  display: block;
+  position: absolute;
+  top: -3px;
+  left: -3px;
+  bottom: -3px;
+  right: -3px;
+  border-radius: 0.5rem;
+  background: linear-gradient(transparent, black);
+  opacity: 0.4;
+  z-index: -1;
+}
+
+/* Active styles */
 .button:active {
   box-shadow: none;
 }
 
-/* Removes dotted line inside button on firefox
-.button::-moz-focus-inner {
-  border: none;
-} */
-
+/* Colors */
 .purple {
-  background-color: #a16edb;
-  background: linear-gradient(#a16edb, #7f53b1);
-  border-color: #5c338a;
+  background-color: rgba(139, 50, 240, 0.7);
 }
 
 .green {
-  background-color: #77db6e;
-  background: linear-gradient(#77db6e, #66bd5e);
-  border-color: #338a37;
+  background-color: rgba(62, 223, 48, 0.7);
+}
+
+.orange {
+  background-color: rgba(253, 122, 0, 0.788);
 }
 
 .textButton {
@@ -65,7 +80,7 @@
     rgb(248, 14, 53) 55%,
     orange 95%
   );
-  border: 0.2rem solid transparent;
+  border-color: transparent;
   background-size: 400% auto;
   animation: cycleBackground 9s linear infinite;
 }
@@ -85,10 +100,11 @@
   }
 }
 
-.glow {
+.glow:not([disabled]):not(:active) {
   animation: glow 1.5s ease infinite;
 }
 
-.glow:active {
-  animation: none;
-}
+/* Removes dotted line inside button on firefox
+.button::-moz-focus-inner {
+  border: none;
+} */
