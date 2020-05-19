@@ -8,7 +8,7 @@ import Button from "./Button";
 import utilStyles from "../styles/utils.module.css";
 import styles from "../styles/Guessing.module.css";
 
-export default function Guessing(props) {
+export default function Guessing({ dataURL, onLoad }) {
   const [submitted, setSubmitted] = useState(false);
   const socket = useContext(SocketContext);
 
@@ -16,9 +16,9 @@ export default function Guessing(props) {
   const input = useRef(null);
 
   useEffect(() => {
-    props.onLoad(true); // acknowledge server's message
+    onLoad(true); // acknowledge server's message
     socket.once("get-data", (ack) => ack(input.current.value));
-  }, [socket]);
+  }, [socket, onLoad]);
 
   return (
     <div className={`${utilStyles.center} ${utilStyles.fullPage}`}>
@@ -60,7 +60,7 @@ export default function Guessing(props) {
         </Button>
       </form>
       <img
-        src={props.dataURL}
+        src={dataURL}
         alt="Previous player's drawing"
         className={utilStyles.drawing}
       />
@@ -70,4 +70,5 @@ export default function Guessing(props) {
 
 Guessing.propTypes = {
   dataURL: PropTypes.string.isRequired,
+  onLoad: PropTypes.func.isRequired,
 };

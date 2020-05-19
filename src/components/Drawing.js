@@ -15,7 +15,7 @@ const tools = {
   ERASER: "ERASER",
 };
 
-export default function Drawing(props) {
+export default function Drawing({ word, onLoad }) {
   const [radius, setRadius] = useState(3);
   const [activeTool, setActiveTool] = useState(tools.PEN);
 
@@ -41,7 +41,7 @@ export default function Drawing(props) {
     ctxRef.current.lineWidth = 2 * radius;
 
     // Confirm loaded
-    props.onLoad(true);
+    onLoad(true);
     // Prepare to respond with data
     socket.once("get-data", (ack) => ack(canvas.current.toDataURL()));
 
@@ -135,7 +135,7 @@ export default function Drawing(props) {
 
   return (
     <div className={`${utilStyles.center} ${utilStyles.fullPage}`}>
-      <h1 className={utilStyles.headingLg}>Draw: "{props.word}"</h1>
+      <h1 className={utilStyles.headingLg}>Your word: "{word}"</h1>
       <div className={styles.toolbar}>
         <div>
           <button
@@ -201,4 +201,5 @@ export default function Drawing(props) {
 
 Drawing.propTypes = {
   word: PropTypes.string.isRequired,
+  onLoad: PropTypes.func.isRequired,
 };
