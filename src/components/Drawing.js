@@ -40,8 +40,8 @@ export default function Drawing(props) {
     ctxRef.current.lineCap = "round";
     ctxRef.current.lineWidth = 2 * radius;
 
-    // Confirm loaded (could be ack?)
-    socket.emit("drawing-phase-loaded");
+    // Confirm loaded
+    props.onLoad(true);
     // Prepare to respond with data
     socket.once("get-data", (ack) => ack(canvas.current.toDataURL()));
 

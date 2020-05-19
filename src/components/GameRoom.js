@@ -31,16 +31,16 @@ export default function GameRoom(props) {
     setPhaseComponent(<Countdown message={message} />);
   }
 
-  function loadDrawingPhase(word) {
+  function loadDrawingPhase(word, ack) {
     socket.off("load-replay"); // TODO: Is there a better solution to control flow after guessing phase?
     socket.once("load-guessing-phase", loadGuessingPhase);
-    setPhaseComponent(<Drawing word={word} />);
+    setPhaseComponent(<Drawing onLoad={ack} word={word} />);
   }
 
-  function loadGuessingPhase(dataURL) {
+  function loadGuessingPhase(dataURL, ack) {
     socket.once("load-drawing-phase", loadDrawingPhase);
     socket.once("load-replay", loadReplay);
-    setPhaseComponent(<Guessing dataURL={dataURL} />);
+    setPhaseComponent(<Guessing onLoad={ack} dataURL={dataURL} />);
   }
 
   function loadReplay(gameReplayData) {
