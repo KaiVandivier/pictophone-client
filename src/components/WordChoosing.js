@@ -55,6 +55,7 @@ export default function WordChoosing({ words }) {
   return (
     <div className={`${utilStyles.center} ${utilStyles.fullPage}`}>
       <h1 className={utilStyles.headingLg}>Choose a Word:</h1>
+
       <form onSubmit={handleSubmit}>
         <fieldset
           className={`${utilStyles.fieldset} ${utilStyles.center}`}
@@ -65,10 +66,12 @@ export default function WordChoosing({ words }) {
               <div className={utilStyles.center}>
                 {words.slice(0, words.length / 2).map(mapWords)}
               </div>
+
               <div className={utilStyles.center}>
                 {words.slice(words.length / 2).map(mapWords)}
               </div>
             </div>
+
             <label
               className={`${styles.wordChoice} ${
                 checked === "custom" ? styles.checked : null
@@ -88,7 +91,10 @@ export default function WordChoosing({ words }) {
                 name="custom"
                 placeholder="or write your own!"
                 value={customInput}
-                onChange={(e) => setCustomInput(e.target.value)}
+                onChange={(e) => {
+                  setCustomInput(e.target.value);
+                  setChecked("custom");
+                }}
                 onClick={() => setChecked("custom")}
               />
             </label>
@@ -103,12 +109,13 @@ export default function WordChoosing({ words }) {
           </div>
         </fieldset>
       </form>
+
       {allReady ? (
         <p>Everyone is ready! Waiting for host to start.</p>
       ) : (
         <p>Waiting for everyone to choose a word...</p>
       )}
-      {/* Add/remove `true` for testing */}
+
       {socket.id === room.hostId ? (
         <Button
           color="green"
