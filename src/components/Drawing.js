@@ -1,9 +1,12 @@
 import React, { useState, useEffect, useRef, useContext } from "react";
 import PropTypes from "prop-types";
+
 import { SocketContext } from "../App";
+import Timer from "./Timer";
+import Button from "./Button";
+
 import utilStyles from "../styles/utils.module.css";
 import styles from "../styles/Drawing.module.css";
-import Timer from "./Timer";
 
 // TODO:
 // Cleanliness: would animation work with `state` and setting state with functions to persist values between animation?
@@ -31,7 +34,7 @@ export default function Drawing({ word, onLoad }) {
 
   useEffect(() => {
     canvas.current.width = Math.min(document.documentElement.clientWidth - 20, 400); //window.innerWidth
-    canvas.current.height = Math.min(document.documentElement.clientHeight - 50, 600); // window.innerHeight
+    canvas.current.height = Math.min(document.documentElement.clientHeight - 100, 600); // window.innerHeight
 
     ctxRef.current = canvas.current.getContext("2d");
     ctxRef.current.strokeStyle = "#222";
@@ -135,31 +138,35 @@ export default function Drawing({ word, onLoad }) {
 
   return (
     <div className={`${utilStyles.center} ${utilStyles.fullPage}`}>
-      <h1 className={utilStyles.headingLg}>Your word: "{word}"</h1>
+      <h1 className={`${utilStyles.heading} ${styles.heading}`}>Your word: "{word}"</h1>
+
       <div className={styles.toolbar}>
         <div>
-          <button
-            className={`${utilStyles.smallButton} ${styles.noShadow} ${
-              activeTool === tools.PEN ? styles.selected : null
-            }`}
+          <Button
+            small
+            noShadow
+            color={activeTool === tools.PEN ? "orange" : null}
             onClick={switchToPen}
           >
             Pen
-          </button>
-          <button
-            className={`${utilStyles.smallButton} ${styles.noShadow} ${
-              activeTool === tools.ERASER ? styles.selected : null
-            }`}
+          </Button>
+
+          <Button
+            small
+            noShadow
+            color={activeTool === tools.ERASER ? "orange" : null}
             onClick={switchToEraser}
           >
             Eraser
-          </button>
-          <button
-            className={`${utilStyles.smallButton} ${styles.noShadow}`}
+          </Button>
+
+          <Button
+            small
+            noShadow
             onClick={clearCanvas}
           >
             Clear All
-          </button>
+          </Button>
         </div>
         <div className={styles.timer}>
           <Timer highlightTimeLow />
