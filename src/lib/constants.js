@@ -1,15 +1,23 @@
 const CANVAS_HEIGHT = 480;
 const CANVAS_WIDTH = 360;
+
 const phases = Object.freeze({
-  WAITING: "waiting",
-  CHOOSING_WORD: "choosing-word",
-  DRAWING: "drawing",
-  GUESSING: "guessing",
-  REPLAY: "replay",
+  WAITING: "WAITING",
+  WORD_CHOOSING: "WORD_CHOOSING",
+  DRAWING: "DRAWING",
+  GUESSING: "GUESSING",
+  REPLAY: "REPLAY",
 });
+
+const dataTypes = Object.freeze({
+  WORD: "word",
+  DRAWING: "drawing",
+  GUESSING: "guess",
+})
 
 export {
   CANVAS_HEIGHT,
   CANVAS_WIDTH,
-  phases
+  phases,
+  dataTypes
 }

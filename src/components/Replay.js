@@ -1,5 +1,8 @@
 import React from "react";
 import PropTypes from "prop-types";
+
+import { dataTypes } from "../lib/constants";
+
 import utilStyles from "../styles/utils.module.css";
 
 export default function Replay({ gameReplayData }) {
@@ -14,7 +17,7 @@ export default function Replay({ gameReplayData }) {
         return (
           <div className={utilStyles.center} key={player.id}>
             {player.replayData.map(({ type, data, playerName }) => {
-              if (type === "word") {
+              if (type === dataTypes.WORD) {
                 return (
                   <h1 className={utilStyles.heading}>
                     <em>{playerName}'s word was: </em>
@@ -22,14 +25,14 @@ export default function Replay({ gameReplayData }) {
                   </h1>
                 );
               }
-              if (type === "guess") {
+              if (type === dataTypes.GUESSING) {
                 return (
                   <h2 className={utilStyles.heading} key={playerName}>
                     {playerName} guessed: <strong>"{data}"</strong>
                   </h2>
                 );
               }
-              if (type === "drawing") {
+              if (type === dataTypes.DRAWING) {
                 return (
                   <div className={utilStyles.center} key={playerName}>
                     <h2 className={utilStyles.heading}>{playerName} drew:</h2>
