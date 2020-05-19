@@ -1,4 +1,5 @@
 import React from "react";
+import { action } from "@storybook/addon-actions";
 
 import Drawing from "../components/Drawing";
 import { SocketContext } from "../App";
@@ -17,5 +18,5 @@ export default {
 }
 
 export const Default = () => (
-  <Drawing word="magic carpet" />
+  <Drawing word="magic carpet" onLoad={action("onLoad")} />
 )

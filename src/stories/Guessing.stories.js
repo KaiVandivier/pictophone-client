@@ -1,4 +1,5 @@
 import React from "react";
+import { action } from "@storybook/addon-actions";
 
 import Guessing from "../components/Guessing";
 import { SocketContext } from "../App";
@@ -14,8 +15,8 @@ export default {
       </SocketContext.Provider>
     ),
   ],
-}
+};
 
 export const Default = () => (
-  <Guessing dataURL={testDataURL} />
+  <Guessing dataURL={testDataURL} onLoad={action("onLoad")} />
 );

@@ -19,7 +19,7 @@ export default {
         <Story />
       </SocketContext.Provider>
     ),
-  ], // context goes here
+  ],
   // excludeStories: /.*Data$/,
 };
 
