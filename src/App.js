@@ -99,18 +99,17 @@ function App() {
               className={utilStyles.fieldset}
             >
               <div className={utilStyles.center}>
-                <h2 className={utilStyles.heading}>2. Create or Join Room:</h2>
+                <h2 className={utilStyles.heading}>2. Join or Create Room:</h2>
 
-                <Button
-                  onClick={createRoom}
-                  disabled={!playerNameSubmitted}
-                >
-                  Create Room
-                </Button>
+                <div>
+                  <Button onClick={getRooms} disabled={!playerNameSubmitted}>
+                    Refresh Rooms {"\u27F3"}
+                  </Button>
 
-                <Button textButton onClick={getRooms}>
-                  Refresh Rooms
-                </Button>
+                  <Button onClick={createRoom} disabled={!playerNameSubmitted}>
+                    Create Room
+                  </Button>
+                </div>
 
                 <ul className={styles.roomList}>
                   {rooms.map(({ id, name }) => (
