@@ -11,11 +11,17 @@
   font-weight: 600;
   color: white;
   cursor: pointer;
-  box-shadow: 0 1.1px 2.7px rgba(0, 0, 0, 0.043),
-    0 2.8px 6.9px rgba(0, 0, 0, 0.062), 0 5.7px 14.2px rgba(0, 0, 0, 0.078),
-    0 11.7px 29.2px rgba(0, 0, 0, 0.097), 0 32px 80px rgba(0, 0, 0, 0.14);
   transition: box-shadow 0.15s;
-  transition: background-color 0.2s;
+  transition: background-color 0.15s;
+}
+
+.button:not([disabled]):not(:active):not(.noShadow) {
+  box-shadow:
+    0 0.3px 1px -10px rgba(0, 0, 0, 0.091),
+    0 0.8px 2.6px -10px rgba(0, 0, 0, 0.13),
+    0 1.8px 6.3px -10px rgba(0, 0, 0, 0.169),
+    0 6px 21px -10px rgba(0, 0, 0, 0.26)
+  ;
 }
 
 .button:not([disabled]):not(:active)::before {
@@ -33,13 +39,6 @@
   z-index: -1;
 }
 
-
-/* Active styles */
-.button:active {
-  box-shadow: none;
-}
-
-
 /* Colors */
 .purple {
   background-color: rgba(139, 50, 240, 0.7);
@@ -56,9 +55,11 @@
 
 /* Text Button */
 .textButton {
+  font-family: inherit;
   border: none;
   background: none;
-  font-size: 0.9rem;
+  font-size: 1rem;
+  line-height: 1;
   color: #a16edb;
   cursor: pointer;
 }
@@ -95,30 +96,24 @@
 /* Glow */
 @keyframes glow {
   0%, 100% {
-    box-shadow: 0 0 5px 3px transparent,
-      0 1.1px 2.7px rgba(0, 0, 0, 0.043),
-      0 2.8px 6.9px rgba(0, 0, 0, 0.062), 0 5.7px 14.2px rgba(0, 0, 0, 0.078),
-      0 11.7px 29.2px rgba(0, 0, 0, 0.097), 0 32px 80px rgba(0, 0, 0, 0.14);
+    box-shadow: 0 0 8px 6px transparent,
+      0 0.3px 1px -10px rgba(0, 0, 0, 0.091),
+      0 0.8px 2.6px -10px rgba(0, 0, 0, 0.13),
+      0 1.8px 6.3px -10px rgba(0, 0, 0, 0.169),
+      0 6px 21px -10px rgba(0, 0, 0, 0.26)
+    ;
   }
   50% {
-    box-shadow: 0 0 8px 5px rgb(255, 230, 0),
-      0 1.1px 2.7px rgba(0, 0, 0, 0.043),
-      0 2.8px 6.9px rgba(0, 0, 0, 0.062), 0 5.7px 14.2px rgba(0, 0, 0, 0.078),
-      0 11.7px 29.2px rgba(0, 0, 0, 0.097), 0 32px 80px rgba(0, 0, 0, 0.14);
+    box-shadow: 0 0 8px 6px rgb(255, 230, 0);
   }
 }
 
 .glow:not([disabled]):not(:active) {
-  animation: glow 1.5s ease infinite;
+  animation: glow 1.5s ease-in-out infinite;
 }
 
 
 /* Misc options */
-.noShadow,
-.button[disabled] {
-  box-shadow: none;
-}
-
 .medium {
   font-size: 1rem;
 }
