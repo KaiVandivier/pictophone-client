@@ -3,7 +3,7 @@
   font-weight: normal;
   font-size: 2.5rem;
   line-height: 1;
-  margin: 0.5rem 0 0.5rem;
+  margin: 0.5rem 0;
 }
 
 .spaceAtBottom {
@@ -20,7 +20,7 @@
   max-width: 450px;
 }
 
-.playerList h3 {
+.gridContainer h3 {
   font-family: "Eczar", serif;
   font-size: 1.8rem;
   font-weight: normal;
@@ -62,4 +62,18 @@
   /* border: 0.2rem solid transparent; */
   background-size: 300% auto;
   animation: cycleBackground 7s linear infinite;
+}
+
+.details {
+  line-height: 1;
+}
+
+.details > summary {
+  color: #a16edb;
+  cursor: pointer;
+}
+
+.details > p {
+  text-align: center;
+  margin-top: 0.5rem;
 }

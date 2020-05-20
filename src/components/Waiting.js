@@ -35,19 +35,18 @@ export default function Waiting({ gameReplayData }) {
             <>
               <h1 className={utilStyles.titleHome}>Pict-o-phone!</h1>
               <h2>{room.name || "Game Room"}</h2>
-              <p>
-                Room id: <code>{room.id}</code>
-              </p>
-              <p>(Send the room id to other players so they can join!)</p>
+              
             </>
           ) : (
             <>
               <h2>Want to play again?</h2>
-              <p>
-                {room.name || "Game Room"}, id: <code>{room.id}</code>
-              </p>
+
             </>
           )}
+          <details className={styles.details}>
+                <summary>Room ID</summary>
+                <p>{room.id}</p>
+              </details>
         </header>
 
         <hr className={utilStyles.hr} />
@@ -65,7 +64,7 @@ export default function Waiting({ gameReplayData }) {
                     {ready ? (
                       <small>Ready!</small>
                     ) : (
-                      <small className={id === socket.id ? styles.highlight : null}>Not Ready Yet</small>
+                      <small className={id === socket.id ? styles.highlight : null}>Not Ready</small>
                     )}
                   </p>
                 </li>
@@ -75,7 +74,7 @@ export default function Waiting({ gameReplayData }) {
 
           <div className={utilStyles.center}>
             {!playerReady ? (
-              <p>Ready to start?</p>
+              <h3>Ready?</h3>
             ) : allReady ? (
               <p className={styles.highlight}>Everyone is ready! Waiting for host to start.</p>
             ) : (
