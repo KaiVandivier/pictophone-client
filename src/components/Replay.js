@@ -4,6 +4,7 @@ import PropTypes from "prop-types";
 import { dataTypes } from "../lib/constants";
 
 import utilStyles from "../styles/utils.module.css";
+import styles from "../styles/Replay.module.css";
 
 export default function Replay({ gameReplayData }) {
   return (
@@ -21,14 +22,14 @@ export default function Replay({ gameReplayData }) {
                 return (
                   <h1 className={utilStyles.heading}>
                     <em>{playerName}'s word was: </em>
-                    <strong>"{data}"</strong>
+                    <span className={utilStyles.word}>&ldquo;{data}&rdquo;</span>
                   </h1>
                 );
               }
               if (type === dataTypes.GUESSING) {
                 return (
-                  <h2 className={utilStyles.heading} key={playerName}>
-                    {playerName} guessed: <strong>"{data}"</strong>
+                  <h2 className={`${utilStyles.heading} ${styles.guess}`} key={playerName}>
+                    {playerName} guessed: <span className={utilStyles.word}>&ldquo;{data}&rdquo;</span>
                   </h2>
                 );
               }

@@ -33,8 +33,14 @@ export default function Drawing({ word, onLoad }) {
   const socket = useContext(SocketContext);
 
   useEffect(() => {
-    canvas.current.width = Math.min(document.documentElement.clientWidth - 20, 400); //window.innerWidth
-    canvas.current.height = Math.min(document.documentElement.clientHeight - 100, 600); // window.innerHeight
+    canvas.current.width = Math.min(
+      document.documentElement.clientWidth - 20,
+      400
+    ); //window.innerWidth
+    canvas.current.height = Math.min(
+      document.documentElement.clientHeight - 100,
+      600
+    ); // window.innerHeight
 
     ctxRef.current = canvas.current.getContext("2d");
     ctxRef.current.strokeStyle = "#222";
@@ -138,7 +144,9 @@ export default function Drawing({ word, onLoad }) {
 
   return (
     <div className={`${utilStyles.center} ${utilStyles.fullPage}`}>
-      <h1 className={`${utilStyles.heading} ${styles.heading}`}>Your word: "{word}"</h1>
+      <h1 className={`${utilStyles.heading} ${styles.heading}`}>
+        Your word: <span className={utilStyles.word}>&ldquo;{word}&rdquo;</span>
+      </h1>
 
       <div className={styles.toolbar}>
         <div>
@@ -160,11 +168,7 @@ export default function Drawing({ word, onLoad }) {
             Eraser
           </Button>
 
-          <Button
-            small
-            noShadow
-            onClick={clearCanvas}
-          >
+          <Button small noShadow onClick={clearCanvas}>
             Clear All
           </Button>
         </div>

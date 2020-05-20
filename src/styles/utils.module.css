@@ -124,3 +124,28 @@ img.drawing {
 .textButton:hover {
   text-decoration: underline;
 }
+
+.word {
+  display: inline-block;
+  position: relative;
+  /* background-color: #a16edb; */
+  padding: 0.5rem 1rem;
+  font-weight: bold;
+  color: white;
+  background-color: #a16edb;
+  vertical-align: center;
+  transform: skew(-10deg);
+}
+
+/* .word::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: -1;
+  transform: skew(-10deg);
+  background-color: #a16edb;
+  box-decoration-break: clone;
+} */

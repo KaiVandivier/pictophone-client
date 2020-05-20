@@ -42,7 +42,7 @@ export default function Waiting({ gameReplayData }) {
             </>
           ) : (
             <>
-              <h2>...play again?</h2>
+              <h2>Want to play again?</h2>
               <p>
                 {room.name || "Game Room"}, id: <code>{room.id}</code>
               </p>
