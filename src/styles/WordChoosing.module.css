@@ -14,7 +14,7 @@
   padding: 0 1rem;
   margin-bottom: 0.3rem;
   font-family: "Eczar", serif;
-  font-size: 1rem;
+  font-size: inherit;
   font-weight: 600;
   color: white;
   background-color: #aeb1d4;

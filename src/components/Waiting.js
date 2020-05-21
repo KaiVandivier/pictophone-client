@@ -73,12 +73,10 @@ export default function Waiting({ gameReplayData }) {
           </div>
 
           <div className={utilStyles.center}>
-            {!playerReady ? (
+            {!allReady ? (
               <h3>Ready?</h3>
-            ) : allReady ? (
-              <p className={styles.highlight}>Everyone is ready! Waiting for host to start.</p>
             ) : (
-              <p>Waiting for everyone to be ready...</p>
+              <h3 className={styles.highlight}>Let's go!</h3>
             )}
 
             <Button
