@@ -1,5 +1,6 @@
 import React from "react";
 import { action } from "@storybook/addon-actions";
+import { withKnobs, text } from "@storybook/addon-knobs";
 
 import Drawing from "../components/Drawing";
 import { SocketContext } from "../App";
@@ -8,7 +9,7 @@ import { testSocket } from "../lib/testUtils";
 export default {
   title: "Drawing",
   component: Drawing,
-  decorators: [
+  decorators: [withKnobs,
     (Story) => (
       <SocketContext.Provider value={{ ...testSocket }}>
         <Story />
@@ -18,5 +19,5 @@ export default {
 }
 
 export const Default = () => (
-  <Drawing word="magic carpet" onLoad={action("onLoad")} />
+  <Drawing word={text("Word", "magic carpet")} onLoad={action("onLoad")} />
 )
