@@ -2,6 +2,7 @@ const msgs = Object.freeze({
   MESSAGE: "message",
   CONTINUE: "continue",
   GET_ROOMS: "get-rooms",
+  OPEN_ROOMS: "open-rooms",
   JOIN_ROOM: "join-room",
   CREATE_ROOM: "create-room",
   LEAVE_ROOM: "leave-room",

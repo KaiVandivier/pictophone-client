@@ -25,6 +25,7 @@ function App() {
   useEffect(() => {
     socket.on(msgs.MESSAGE, (msg) => alert(msg));
     socket.on(msgs.ROOM_UPDATE, setRoom);
+    socket.on(msgs.OPEN_ROOMS, setRooms);
 
     getRooms();
 
@@ -101,30 +102,25 @@ function App() {
               <div className={utilStyles.center}>
                 <h2 className={utilStyles.heading}>2. Join or Create Room:</h2>
 
-                
-
                 <ul className={styles.roomList}>
-                  {rooms.length !== 0 ? (
-                    ""
+                  {rooms.length === 0 ? (
+                    <li className={styles.roomItem}>
+                      <p>No open rooms yet!</p>
+                      <Button disabled>Join</Button>
+                    </li>
                   ) : (
-                    <>
-                      <li className={styles.roomItem}>
-                        <p>No open rooms yet!</p>
-                        <Button disabled>Join</Button>
-                      </li>
-                      {rooms.map(({ id, name }) => (
-                        <li key={id} className={styles.roomItem}>
-                          <p>{name}</p>
+                    rooms.map(({ id, name }) => (
+                      <li key={id} className={styles.roomItem}>
+                        <p>{name}</p>
 
-                          <Button
-                            onClick={() => joinRoom(id)}
-                            disabled={!playerNameSubmitted}
-                          >
-                            Join
-                          </Button>
-                        </li>
-                      ))}
-                    </>
+                        <Button
+                          onClick={() => joinRoom(id)}
+                          disabled={!playerNameSubmitted}
+                        >
+                          Join
+                        </Button>
+                      </li>
+                    ))
                   )}
 
                   {/* TODO: Join room by ID */}
