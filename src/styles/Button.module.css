@@ -1,5 +1,8 @@
 /* Default styles */
 .button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   padding: 3px 0.8rem;
   position: relative;
   margin: 0.5rem;
@@ -56,9 +59,9 @@
 /* Text Button */
 .textButton {
   font-family: inherit;
+  font-size: inherit;
   border: none;
   background: none;
-  font-size: 1rem;
   line-height: 1;
   color: #a16edb;
   cursor: pointer;

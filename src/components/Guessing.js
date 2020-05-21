@@ -13,16 +13,19 @@ export default function Guessing({ dataURL, onLoad }) {
   const socket = useContext(SocketContext);
 
   // use a ref to track value for submit
-  const input = useRef(null);
+  // TODO: Try using state, and use `set` with a function to keep it updated
+  const inputRef = useRef(null);
 
   useEffect(() => {
+    inputRef.current.focus();
+
     onLoad(true); // acknowledge server's message
-    socket.once("get-data", (ack) => ack(input.current.value));
+    socket.once("get-data", (ack) => ack(inputRef.current.value));
   }, [socket, onLoad]);
 
   return (
     <div className={`${utilStyles.center} ${utilStyles.fullPage}`}>
-      <h1 className={utilStyles.headingLg}>Guess:</h1>
+      <h1 className={utilStyles.headingLg}>What do you see?</h1>
       <form
         autoComplete="off"
         className={styles.gridContainer}
@@ -38,13 +41,12 @@ export default function Guessing({ dataURL, onLoad }) {
           <fieldset disabled={submitted} className={utilStyles.fieldset}>
             <label htmlFor="guess">
               <input
-                className={styles.glow}
+                ref={inputRef}
                 disabled={submitted}
-                ref={input}
                 type="text"
                 name="guess"
                 id="guess"
-                placeholder="What's in the image?"
+                placeholder="Guess"
               />
             </label>
           </fieldset>
@@ -52,9 +54,7 @@ export default function Guessing({ dataURL, onLoad }) {
         <Button
           type="submit"
           disabled={submitted}
-          color={
-            submitted ? "green" : null
-          }
+          color="green"
         >
           {"\u2714"}
         </Button>

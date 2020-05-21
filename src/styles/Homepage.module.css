@@ -1,4 +1,5 @@
 .roomItem {
+  text-align: left;
   display: grid;
   grid-template-columns: 1fr auto;
   grid-gap: 2rem;
@@ -6,6 +7,10 @@
   align-items: center;
   justify-items: start;
   border-top: 1px solid lightgrey;
+}
+
+.roomItem:last-child {
+  border-bottom: 1px solid lightgrey;
 }
 
 .roomItem input {

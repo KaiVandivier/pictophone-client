@@ -18,7 +18,7 @@ export const RoomContext = React.createContext(null);
 function App() {
   const [rooms, setRooms] = useState([]);
   const [room, setRoom] = useState(null);
-  const [roomInput, setRoomInput] = useState("");
+  // const [roomInput, setRoomInput] = useState("");
   const [playerName, setPlayerName] = useState("");
   const [playerNameSubmitted, setPlayNameSubmitted] = useState(false);
 
@@ -77,7 +77,7 @@ function App() {
                     type="text"
                     id="player-name"
                     style={{ textAlign: "center" }}
-                    placeholder="Enter Your Player Name"
+                    placeholder="Player Name"
                     value={playerName}
                     onChange={(e) => {
                       setPlayerName(e.target.value);
@@ -101,31 +101,34 @@ function App() {
               <div className={utilStyles.center}>
                 <h2 className={utilStyles.heading}>2. Join or Create Room:</h2>
 
-                <div>
-                  <Button onClick={getRooms} disabled={!playerNameSubmitted}>
-                    Refresh Rooms {"\u27F3"}
-                  </Button>
-
-                  <Button onClick={createRoom} disabled={!playerNameSubmitted}>
-                    Create Room
-                  </Button>
-                </div>
+                
 
                 <ul className={styles.roomList}>
-                  {rooms.map(({ id, name }) => (
-                    <li key={id} className={styles.roomItem}>
-                      <p>{name}</p>
+                  {rooms.length !== 0 ? (
+                    ""
+                  ) : (
+                    <>
+                      <li className={styles.roomItem}>
+                        <p>No open rooms yet!</p>
+                        <Button disabled>Join</Button>
+                      </li>
+                      {rooms.map(({ id, name }) => (
+                        <li key={id} className={styles.roomItem}>
+                          <p>{name}</p>
 
-                      <Button
-                        onClick={() => joinRoom(id)}
-                        disabled={!playerNameSubmitted}
-                      >
-                        Join
-                      </Button>
-                    </li>
-                  ))}
+                          <Button
+                            onClick={() => joinRoom(id)}
+                            disabled={!playerNameSubmitted}
+                          >
+                            Join
+                          </Button>
+                        </li>
+                      ))}
+                    </>
+                  )}
 
-                  <li className={styles.roomItem}>
+                  {/* TODO: Join room by ID */}
+                  {/* <li className={styles.roomItem}>
                     <div>
                       <input
                         type="text"
@@ -144,8 +147,17 @@ function App() {
                     >
                       Join
                     </Button>
-                  </li>
+                  </li> */}
                 </ul>
+
+                <div>
+                  <Button onClick={getRooms} disabled={!playerNameSubmitted}>
+                    Refresh Rooms
+                  </Button>
+                  <Button onClick={createRoom} disabled={!playerNameSubmitted}>
+                    Create Room
+                  </Button>
+                </div>
               </div>
             </fieldset>
           </div>
