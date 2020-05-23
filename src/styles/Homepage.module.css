@@ -4,6 +4,7 @@
   grid-template-columns: 1fr auto;
   grid-gap: 2rem;
   max-width: 450px;
+  min-width: 15rem;
   align-items: center;
   justify-items: start;
   border-top: 1px solid lightgrey;
@@ -21,7 +22,36 @@
 }
 
 .roomList {
+  padding: 0;
   margin: 0.5rem 0;
   list-style: none;
-  padding: 0;
+}
+
+/* Details styles */
+.details {
+  max-width: 30rem;
+  width: 80vw;
+}
+
+.details > summary {
+  line-height: 1;
+  color: #a16edb;
+  cursor: pointer;
+}
+
+.details > div > p {
+  text-align: justify;
+}
+
+.details p {
+  margin-top: 0.5rem;
+}
+
+.details ol {
+  margin: 0;
+  padding-left: 1.5rem;
+}
+
+.details li {
+  text-align: left;
 }
