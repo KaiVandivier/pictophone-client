@@ -4,14 +4,14 @@ import { withKnobs, text } from "@storybook/addon-knobs";
 
 import Drawing from "../components/Drawing";
 import { SocketContext } from "../App";
-import { testSocket } from "../lib/testUtils";
+import { testSocketData } from "./Homepage.stories";
 
 export default {
   title: "Drawing",
   component: Drawing,
   decorators: [withKnobs,
     (Story) => (
-      <SocketContext.Provider value={{ ...testSocket }}>
+      <SocketContext.Provider value={{ ...testSocketData }}>
         <Story />
       </SocketContext.Provider>
     ),

@@ -3,19 +3,20 @@ import React from "react";
 import Waiting from "../components/Waiting";
 import { SocketContext, RoomContext } from "../App";
 import {
-  testSocket,
   testRoomPlayerNotReady,
   testRoomPlayerReady,
   testRoomAllReady,
   testReplayData,
 } from "../lib/testUtils";
+import { testSocketData } from "./Homepage.stories";
+
 
 export default {
   title: "Waiting",
   component: Waiting,
   decorators: [
     (Story) => (
-      <SocketContext.Provider value={{ ...testSocket }}>
+      <SocketContext.Provider value={{ ...testSocketData }}>
         <Story />
       </SocketContext.Provider>
     ),

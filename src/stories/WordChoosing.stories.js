@@ -3,19 +3,20 @@ import React from "react";
 import WordChoosing from "../components/WordChoosing";
 import { SocketContext, RoomContext } from "../App";
 import {
-  testSocket,
   testRoomPlayerNotReady,
   testRoomPlayerReady,
   testRoomAllReady,
   testWords,
 } from "../lib/testUtils";
+import { testSocketData } from "./Homepage.stories";
+
 
 export default {
   title: "WordChoosing",
   component: WordChoosing,
   decorators: [
     (Story) => (
-      <SocketContext.Provider value={{ ...testSocket }}>
+      <SocketContext.Provider value={{ ...testSocketData }}>
         <Story />
       </SocketContext.Provider>
     ),

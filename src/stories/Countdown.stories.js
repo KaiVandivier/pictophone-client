@@ -2,14 +2,14 @@ import React from "react";
 
 import Countdown from "../components/Countdown";
 import { SocketContext } from "../App";
-import { testSocket } from "../lib/testUtils";
+import { testSocketData } from "./Homepage.stories";
 
 export default {
   title: "Countdown",
   component: Countdown,
   decorators: [
     (Story) => (
-      <SocketContext.Provider value={{ ...testSocket }}>
+      <SocketContext.Provider value={{ ...testSocketData }}>
         <Story />
       </SocketContext.Provider>
     ),
