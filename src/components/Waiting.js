@@ -35,18 +35,15 @@ export default function Waiting({ gameReplayData }) {
             <>
               <h1 className={utilStyles.titleHome}>Pict-o-phone!</h1>
               <h2>{room.name || "Game Room"}</h2>
-              
             </>
           ) : (
-            <>
-              <h2>Want to play again?</h2>
-
-            </>
+            <h2>Ready for the next round?</h2>
           )}
-          <details className={styles.details}>
-                <summary>Room ID</summary>
-                <p>{room.id}</p>
-              </details>
+          {/* To be readded when you can join a room by ID: */}
+          {/* <details className={styles.details}>
+            <summary>Room ID</summary>
+            <p>{room.id}</p>
+          </details> */}
         </header>
 
         <hr className={utilStyles.hr} />
@@ -64,7 +61,11 @@ export default function Waiting({ gameReplayData }) {
                     {ready ? (
                       <small>Ready!</small>
                     ) : (
-                      <small className={id === socket.id ? styles.highlight : null}>Not Ready</small>
+                      <small
+                        className={id === socket.id ? styles.highlight : null}
+                      >
+                        Not Ready
+                      </small>
                     )}
                   </p>
                 </li>
@@ -103,10 +104,7 @@ export default function Waiting({ gameReplayData }) {
 
         <hr className={utilStyles.hr} />
 
-        <Button
-          textButton
-          onClick={() => socket.emit(msgs.LEAVE_ROOM)}
-        >
+        <Button textButton onClick={() => socket.emit(msgs.LEAVE_ROOM)}>
           {"\u2190"} Leave Room
         </Button>
       </section>
