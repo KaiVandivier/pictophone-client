@@ -124,10 +124,11 @@ export default function Homepage() {
               onChange={(e) => {
                 setPlayerName(e.target.value);
               }}
+              required
             />
 
             <Button
-              disabled={playerName.length < 1 || playerNameSubmitted}
+              disabled={playerNameSubmitted}
               type="submit"
             >
               Submit

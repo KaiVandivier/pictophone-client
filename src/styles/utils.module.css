@@ -76,7 +76,7 @@ img.drawing {
 }
 
 *[disabled] {
-  opacity: 0.5;
+  opacity: 0.4;
   pointer-events: none;
   box-shadow: none;
 }
