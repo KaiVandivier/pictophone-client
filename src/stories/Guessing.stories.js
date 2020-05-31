@@ -1,5 +1,6 @@
 import React from "react";
 import { action } from "@storybook/addon-actions";
+import { withKnobs, text } from "@storybook/addon-knobs";
 
 import Guessing from "../components/Guessing";
 import { SocketContext } from "../App";
@@ -11,6 +12,7 @@ export default {
   title: "Guessing",
   component: Guessing,
   decorators: [
+    withKnobs,
     (Story) => (
       <SocketContext.Provider value={{ ...testSocketData }}>
         <Story />
@@ -20,5 +22,5 @@ export default {
 };
 
 export const Default = () => (
-  <Guessing dataURL={testDataURL} onLoad={action("onLoad")} />
+  <Guessing dataURL={testDataURL} previousPlayer={text("Previous player", "Kai")} onLoad={action("onLoad")} />
 );

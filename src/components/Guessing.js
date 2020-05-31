@@ -8,7 +8,7 @@ import Button from "./Button";
 import utilStyles from "../styles/utils.module.css";
 import styles from "../styles/Guessing.module.css";
 
-export default function Guessing({ dataURL, onLoad }) {
+export default function Guessing({ dataURL, previousPlayer, onLoad }) {
   const [submitted, setSubmitted] = useState(false);
   const socket = useContext(SocketContext);
 
@@ -25,7 +25,8 @@ export default function Guessing({ dataURL, onLoad }) {
 
   return (
     <div className={`${utilStyles.center} ${utilStyles.fullPage}`}>
-      <h1 className={utilStyles.headingLg}>What do you see?</h1>
+      <h1 className={styles.heading}>Guess: What do you see?</h1>
+
       <form
         autoComplete="off"
         className={styles.gridContainer}
@@ -59,6 +60,8 @@ export default function Guessing({ dataURL, onLoad }) {
           {"\u2714"}
         </Button>
       </form>
+      <p><em>{previousPlayer || "Previous player"}'s drawing:</em></p>
+
       <img
         src={dataURL}
         alt="Previous player's drawing"
@@ -70,5 +73,6 @@ export default function Guessing({ dataURL, onLoad }) {
 
 Guessing.propTypes = {
   dataURL: PropTypes.string.isRequired,
+  previousPlayer: PropTypes.string,
   onLoad: PropTypes.func.isRequired,
 };
