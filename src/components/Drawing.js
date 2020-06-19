@@ -23,7 +23,7 @@ export default function Drawing({ word, onLoad }) {
   const [activeTool, setActiveTool] = useState(tools.PEN);
 
   // use "refs" here to persist values between animation frames
-  const canvas = useRef(null);
+  const canvasRef = useRef(null);
   const requestRef = useRef();
   const drawingRef = useRef(false);
   const ctxRef = useRef();
@@ -33,16 +33,16 @@ export default function Drawing({ word, onLoad }) {
   const socket = useContext(SocketContext);
 
   useEffect(() => {
-    canvas.current.width = Math.min(
-      document.documentElement.clientWidth - 20,
-      400
-    ); //window.innerWidth
-    canvas.current.height = Math.min(
-      document.documentElement.clientHeight - 100,
-      600
-    ); // window.innerHeight
+    // Set canvas dimensions
+    const { clientWidth, clientHeight } = document.documentElement;
+    const maxHeight = clientHeight - 100;
+    canvasRef.current.height = maxHeight;
+    canvasRef.current.width = Math.min(
+      Math.round(clientWidth * .90),
+      Math.round(maxHeight * 1.33)
+    )
 
-    ctxRef.current = canvas.current.getContext("2d");
+    ctxRef.current = canvasRef.current.getContext("2d");
     ctxRef.current.strokeStyle = "#222";
     ctxRef.current.fillStyle = "#222";
     ctxRef.current.lineJoin = "round";
@@ -51,10 +51,30 @@ export default function Drawing({ word, onLoad }) {
 
     // Confirm loaded
     onLoad(true);
-    // Prepare to respond with data
-    socket.once("get-data", (ack) => ack(canvas.current.toDataURL()));
+    // Prepare to respond with data to end-of-round signal
+    socket.once("get-data", (ack) => ack(canvasRef.current.toDataURL()));
 
+    // Prevent scrolling and highlighting when touching the canvas
+    document.body.addEventListener("touchstart", function (e) {
+      if (e.target === canvasRef.current) {
+        e.preventDefault();
+      }
+    }, false);
+    document.body.addEventListener("touchend", function (e) {
+      if (e.target === canvasRef.current) {
+        e.preventDefault();
+      }
+    }, false);
+    document.body.addEventListener("touchmove", function (e) {
+      if (e.target === canvasRef.current) {
+        e.preventDefault();
+      }
+    }, false);
+
+    // Start animation loop
     requestRef.current = window.requestAnimationFrame(drawLoop);
+
+    // Relevant listeners
     window.addEventListener("mouseup", stopDrawing);
     window.addEventListener("touchend", stopDrawing);
 
@@ -112,8 +132,8 @@ export default function Drawing({ word, onLoad }) {
   function drawDot(e) {
     const currentPos =
       e.type === "touchstart"
-        ? getTouchPos(canvas.current, e)
-        : getMousePos(canvas.current, e);
+        ? getTouchPos(canvasRef.current, e)
+        : getMousePos(canvasRef.current, e);
     ctxRef.current.save();
     ctxRef.current.beginPath();
     ctxRef.current.arc(currentPos.x, currentPos.y, radius, 0, Math.PI * 2);
@@ -123,7 +143,7 @@ export default function Drawing({ word, onLoad }) {
 
   function clearCanvas() {
     if (!window.confirm("Clear canvas?")) return;
-    ctxRef.current.clearRect(0, 0, canvas.current.width, canvas.current.height);
+    ctxRef.current.clearRect(0, 0, canvasRef.current.width, canvasRef.current.height);
   }
 
   function switchToPen() {
@@ -178,30 +198,30 @@ export default function Drawing({ word, onLoad }) {
       </div>
 
       <canvas
-        ref={canvas}
+        ref={canvasRef}
         className={utilStyles.drawing}
         onMouseDown={(e) => {
           e.preventDefault(); // fixes selecting text on page
           drawDot(e);
-          const mousePos = getMousePos(canvas.current, e);
+          const mousePos = getMousePos(canvasRef.current, e);
           lastPosRef.current = { ...mousePos };
           currentPosRef.current = { ...mousePos };
           drawingRef.current = true;
         }}
         onMouseMove={(e) => {
-          currentPosRef.current = getMousePos(canvas.current, e);
+          currentPosRef.current = getMousePos(canvasRef.current, e);
         }}
         onTouchStart={(e) => {
           drawDot(e);
           e.preventDefault();
-          const touchPos = getTouchPos(canvas.current, e);
+          const touchPos = getTouchPos(canvasRef.current, e);
           lastPosRef.current = { ...touchPos };
           currentPosRef.current = { ...touchPos };
           drawingRef.current = true;
         }}
         onTouchMove={(e) => {
           e.preventDefault();
-          currentPosRef.current = getTouchPos(canvas.current, e);
+          currentPosRef.current = getTouchPos(canvasRef.current, e);
         }}
         onTouchEnd={(e) => e.preventDefault()}
         // `mouseUp` listener moved to `window`
