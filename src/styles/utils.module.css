@@ -90,8 +90,9 @@ img.drawing {
 }
 
 .fullPage {
-  box-sizing: border-box;
   min-height: 100vh;
+  /* Mobile height adjustment for URL bar: */
+  min-height: -webkit-fill-available;
   padding: 1rem;
 }
 
