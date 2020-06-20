@@ -59,6 +59,18 @@ export const testRoomPlayerReady = {
   ],
 };
 
+export const testRoomNotHost = {
+  id: "rmyrV4kcuXrnTjSzGTAAFu",
+  name: "Ambrow's room",
+  hostId: "def5678",
+  players: [
+    { id: "def5678", name: "Ambrow", ready: false },
+    { id: "abc1234", name: "Skina", ready: false },
+    { id: "qwerty1", name: "Tam", ready: true },
+    { id: "9999999", name: "Log", ready: false },
+  ],
+};
+
 export const testRoomAllReady = {
   ...testRoom,
   players: testRoom.players.map((player) => ({

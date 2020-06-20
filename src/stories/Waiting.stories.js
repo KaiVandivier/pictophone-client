@@ -5,6 +5,7 @@ import { SocketContext, RoomContext } from "../App";
 import {
   testRoomPlayerNotReady,
   testRoomPlayerReady,
+  testRoomNotHost,
   testRoomAllReady,
   testReplayData,
 } from "../lib/testUtils";
@@ -24,17 +25,23 @@ export default {
   // excludeStories: /.*Data$/,
 };
 
-export const PlayerNotReady = () => (
+export const HostNotReady = () => (
   <RoomContext.Provider value={{ ...testRoomPlayerNotReady }}>
     <Waiting />
   </RoomContext.Provider>
 );
 
-export const PlayerReady = () => (
+export const HostReady = () => (
   <RoomContext.Provider value={{ ...testRoomPlayerReady }}>
     <Waiting />
   </RoomContext.Provider>
 );
+
+export const NotHost = () => (
+  <RoomContext.Provider value={{ ...testRoomNotHost }}>
+    <Waiting />
+  </RoomContext.Provider>
+)
 
 export const AllReady = () => (
   <RoomContext.Provider value={{ ...testRoomAllReady }}>
