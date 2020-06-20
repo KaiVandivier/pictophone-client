@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import PropTypes from "prop-types";
 
 import Replay from "./Replay";
@@ -12,6 +12,10 @@ import styles from "../styles/Waiting.module.css";
 export default function Waiting({ gameReplayData }) {
   const socket = useContext(SocketContext);
   const room = useContext(RoomContext);
+  const [gameOptions, setGameOptions] = useState({
+    passWordOnOdd: false,
+    useHarderWords: false,
+  });
 
   // In case of "leave room":
   if (!room) return <div>Oops, there's no room!</div>;
@@ -20,6 +24,13 @@ export default function Waiting({ gameReplayData }) {
   const { ready: playerReady } = room.players.find(
     ({ id }) => id === socket.id
   ) || { ready: false };
+
+  function handleChange({ target }) {
+    setGameOptions({
+      ...gameOptions,
+      [target.name]: target.checked
+    })
+  }
 
   return (
     <div className={`${utilStyles.center} ${utilStyles.fullPage}`}>
@@ -93,13 +104,26 @@ export default function Waiting({ gameReplayData }) {
               <Button
                 color="green"
                 glow
-                onClick={() => socket.emit(msgs.START_GAME)}
+                onClick={() => socket.emit(msgs.START_GAME, gameOptions)}
                 disabled={!allReady}
               >
                 Start Game!
               </Button>
             ) : null}
           </div>
+
+          {socket.id === room.hostId ? (
+            <form className={styles.gameOptions}>
+            <label className={styles.gameOption} htmlFor="passWordOnOdd">
+              <input type="checkbox" id="passWordOnOdd" name="passWordOnOdd" onChange={handleChange} />
+              Pass first word with odd players
+            </label>
+            <label className={styles.gameOption} htmlFor="useHarderWords">
+              <input type="checkbox" id="useHarderWords" name="useHarderWords" onChange={handleChange} />
+              Use harder words
+            </label>
+          </form>
+          ) : null}
         </div>
 
         <hr className={utilStyles.hr} />

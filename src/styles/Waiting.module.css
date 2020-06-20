@@ -40,6 +40,14 @@
   color: green;
 }
 
+.gameOptions {
+  grid-column: span 2;
+}
+
+.gameOption {
+  display: block;
+}
+
 @keyframes cycleBackground {
   from {
     background-position: 0 0;
