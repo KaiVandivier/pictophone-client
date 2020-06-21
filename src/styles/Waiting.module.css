@@ -14,7 +14,7 @@
 .gridContainer {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  grid-gap: 1rem;
+  gap: 1rem;
   padding: 1rem;
   min-height: 10rem;
   max-width: 450px;
@@ -74,7 +74,7 @@
 }
 
 .details {
-  line-height: 1;
+  line-height: 1.6;
 }
 
 .details > summary {

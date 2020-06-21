@@ -13,8 +13,7 @@ export default function Waiting({ gameReplayData }) {
   const socket = useContext(SocketContext);
   const room = useContext(RoomContext);
   const [gameOptions, setGameOptions] = useState({
-    passWordOnOdd: false,
-    useHarderWords: false,
+    ...room.gameOptions,
   });
 
   // In case of "leave room":
@@ -28,8 +27,8 @@ export default function Waiting({ gameReplayData }) {
   function handleChange({ target }) {
     setGameOptions({
       ...gameOptions,
-      [target.name]: target.checked
-    })
+      [target.name]: target.checked,
+    });
   }
 
   return (
@@ -113,16 +112,38 @@ export default function Waiting({ gameReplayData }) {
           </div>
 
           {socket.id === room.hostId ? (
-            <form className={styles.gameOptions}>
-            <label className={styles.gameOption} htmlFor="passWordOnOdd">
-              <input type="checkbox" id="passWordOnOdd" name="passWordOnOdd" onChange={handleChange} />
-              Pass first word with odd players
-            </label>
-            <label className={styles.gameOption} htmlFor="useHarderWords">
-              <input type="checkbox" id="useHarderWords" name="useHarderWords" onChange={handleChange} />
-              Use harder words
-            </label>
-          </form>
+            <details className={`${styles.details} ${styles.gameOptions}`}>
+              <summary>Game Options</summary>
+
+              <form>
+                <label
+                  className={styles.gameOption}
+                  htmlFor="passWordOnOdd"
+                  >
+                  <input
+                    type="checkbox"
+                    id="passWordOnOdd"
+                    name="passWordOnOdd"
+                    defaultChecked={gameOptions.passWordOnOdd}
+                    onChange={handleChange}
+                  />
+                  Pass first word with odd players
+                </label>
+                <label
+                  className={styles.gameOption}
+                  htmlFor="useHarderWords"
+                  >
+                  <input
+                    type="checkbox"
+                    id="useHarderWords"
+                    name="useHarderWords"
+                    defaultChecked={gameOptions.useHarderWords}
+                    onChange={handleChange}
+                  />
+                  Use harder words
+                </label>
+              </form>
+            </details>
           ) : null}
         </div>
 
