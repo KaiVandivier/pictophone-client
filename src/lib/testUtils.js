@@ -79,6 +79,14 @@ export const testRoomAllReady = {
   })),
 };
 
+export const testRoomOptionsChecked = {
+  ...testRoom,
+  gameOptions: {
+    passWordOnOdd: true,
+    useHarderWords: true
+  }
+}
+
 export const testReplayData = [
   {
     id: "dZRcE4FsZGe6XLRnAAAC",

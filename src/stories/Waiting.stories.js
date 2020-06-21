@@ -7,6 +7,7 @@ import {
   testRoomPlayerReady,
   testRoomNotHost,
   testRoomAllReady,
+  testRoomOptionsChecked,
   testReplayData,
 } from "../lib/testUtils";
 import { testSocketData } from "./Homepage.stories";
@@ -45,6 +46,12 @@ export const NotHost = () => (
 
 export const AllReady = () => (
   <RoomContext.Provider value={{ ...testRoomAllReady }}>
+    <Waiting />
+  </RoomContext.Provider>
+);
+
+export const OptionsChecked = () => (
+  <RoomContext.Provider value={{ ...testRoomOptionsChecked }}>
     <Waiting />
   </RoomContext.Provider>
 );
