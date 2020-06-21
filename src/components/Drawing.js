@@ -38,9 +38,9 @@ export default function Drawing({ word, onLoad }) {
     const maxHeight = clientHeight - 100;
     canvasRef.current.height = maxHeight;
     canvasRef.current.width = Math.min(
-      Math.round(clientWidth * .90),
+      Math.round(clientWidth * 0.9),
       Math.round(maxHeight * 1.33)
-    )
+    );
 
     ctxRef.current = canvasRef.current.getContext("2d");
     ctxRef.current.strokeStyle = "#222";
@@ -55,21 +55,9 @@ export default function Drawing({ word, onLoad }) {
     socket.once("get-data", (ack) => ack(canvasRef.current.toDataURL()));
 
     // Prevent scrolling and highlighting when touching the canvas
-    document.body.addEventListener("touchstart", function (e) {
-      if (e.target === canvasRef.current) {
-        e.preventDefault();
-      }
-    }, false);
-    document.body.addEventListener("touchend", function (e) {
-      if (e.target === canvasRef.current) {
-        e.preventDefault();
-      }
-    }, false);
-    document.body.addEventListener("touchmove", function (e) {
-      if (e.target === canvasRef.current) {
-        e.preventDefault();
-      }
-    }, false);
+    document.body.addEventListener("touchstart", preventTouchDefault, false);
+    document.body.addEventListener("touchend", preventTouchDefault, false);
+    document.body.addEventListener("touchmove", preventTouchDefault, false);
 
     // Start animation loop
     requestRef.current = window.requestAnimationFrame(drawLoop);
@@ -82,9 +70,24 @@ export default function Drawing({ word, onLoad }) {
       cancelAnimationFrame(requestRef.current);
       window.removeEventListener("mouseup", stopDrawing);
       window.removeEventListener("touchend", stopDrawing);
+      document.body.removeEventListener(
+        "touchstart",
+        preventTouchDefault,
+        false
+      );
+      document.body.removeEventListener("touchend", preventTouchDefault, false);
+      document.body.removeEventListener(
+        "touchmove",
+        preventTouchDefault,
+        false
+      );
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  function preventTouchDefault(e) {
+    if (e.target === canvasRef.current) e.preventDefault();
+  }
 
   function stopDrawing() {
     drawingRef.current = false;
@@ -143,7 +146,12 @@ export default function Drawing({ word, onLoad }) {
 
   function clearCanvas() {
     if (!window.confirm("Clear canvas?")) return;
-    ctxRef.current.clearRect(0, 0, canvasRef.current.width, canvasRef.current.height);
+    ctxRef.current.clearRect(
+      0,
+      0,
+      canvasRef.current.width,
+      canvasRef.current.height
+    );
   }
 
   function switchToPen() {
